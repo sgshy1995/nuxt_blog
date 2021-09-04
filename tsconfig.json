@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "emitDecoratorMetadata": true,
     "target": "ES2018",
     "module": "commonjs",
     "moduleResolution": "Node",

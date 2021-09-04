@@ -5,16 +5,16 @@ module.exports = {
    "username": "blog",
    "password": "sgs19950218",
    "database": "blog_development",
-   "synchronize": true,
+   "synchronize": false,
    "logging": false,
    "entities": [
-      "src/entity/**/*.ts"
+      "build/entity/**/*.js"
    ],
    "migrations": [
-      "src/migration/**/*.ts"
+      "build/migration/**/*.js"
    ],
    "subscribers": [
-      "src/subscriber/**/*.ts"
+      "build/subscriber/**/*.js"
    ],
    "cli": {
       "entitiesDir": "src/entity",
