@@ -26,6 +26,10 @@ type User = {
       query: ctx.query,
       user: user_get
     };
+  },
+  layout: 'GlobalLayout',
+  mounted(this: App) {
+    console.log('mounted', this.user);
   }
 })
 export default class App extends Vue {

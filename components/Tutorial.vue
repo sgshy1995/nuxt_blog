@@ -59,7 +59,10 @@ export default class Tutorial extends Vue{
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.min-h-screen{
+  min-height: calc(100vh - 100px) !important;
+}
 .login{
   color: saddlebrown;
 }
