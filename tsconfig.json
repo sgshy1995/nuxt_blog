@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2018",
-    "module": "ESNext",
+    "module": "commonjs",
     "moduleResolution": "Node",
     "lib": [
       "ESNext",
@@ -11,7 +11,7 @@
     "esModuleInterop": true,
     "allowJs": true,
     "sourceMap": true,
-    "strict": true,
+    "strict": false,
     "noEmit": true,
     "experimentalDecorators": true,
     "baseUrl": ".",
