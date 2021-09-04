@@ -11,14 +11,20 @@ type User = {
 }
 
 @Component({
-  asyncData(ctx: Context): Promise<{ [key: string]: any } | never> | { [key: string]: any } {
+  async asyncData(ctx: Context): Promise<{ [key: string]: any; } | never> {
     console.log('ctx', ctx.query);
     const user = {
       username: 'sgs'
     };
+    const promise = new Promise(resolve => {
+      setTimeout(() => {
+        resolve(user);
+      }, 0);
+    });
+    const user_get = await promise;
     return {
       query: ctx.query,
-      user
+      user: user_get
     };
   }
 })
