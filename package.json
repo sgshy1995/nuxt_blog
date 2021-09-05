@@ -4,12 +4,18 @@
   "private": true,
   "scripts": {
     "dev": "nuxt",
+    "dev:both": "concurrently \"next dev\" \"babel -w ./src --out-dir dist --extensions .ts,.tsx\"",
+    "dev:linux": "next dev & babel -w ./src --out-dir dist --extensions .ts,.tsx",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
     "test": "jest",
     "test-scsslint": "./node_modules/.bin/sass-lint 'client/styles/**/*.scss' -v -q",
-    "typeorm:build": "babel ./src --out-dir build --extensions .ts,.tsx"
+    "typeorm:build": "babel ./src --out-dir build --extensions .ts,.tsx",
+    "typeorm:build:watch": "babel -w ./src --out-dir build --extensions .ts,.tsx",
+    "migration:create": "typeorm migration:create -n CreatePost",
+    "migration:run": "typeorm migration:run",
+    "migration:revert": "typeorm migration:revert"
   },
   "dependencies": {
     "@babel/cli": "^7.15.4",
@@ -31,6 +37,7 @@
     "@vue/test-utils": "^1.2.1",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^27.0.5",
+    "concurrently": "^6.2.1",
     "jest": "^27.0.5",
     "node-sass": "^6.0.1",
     "pg": "^8.7.1",

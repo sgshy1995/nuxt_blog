@@ -16,7 +16,12 @@
         <p class="mt-4 pt-4 text-gray-800 border-t border-dashed">
           To get started, remove <code class="bg-gray-100 text-sm p-1 rounded border">components/Tutorial.vue</code> and start coding in <code class="bg-gray-100 text-sm p-1 rounded border">pages/index.vue</code>. Have fun!
         </p>
-        <div class="login">当前登录用户为： {{ user.username || '-' }}</div>
+        <a-tooltip>
+          <template slot="title">
+            {{ user.username }}
+          </template>
+          <div class="login">当前登录用户为： {{ user.username || '-' }}</div>
+        </a-tooltip>
         <a-button type="primary" size="small">退出登录</a-button>
       </div>
       <div class="flex justify-center pt-4 space-x-2">
@@ -67,5 +72,6 @@ export default class Tutorial extends Vue{
 .login{
   color: saddlebrown;
   margin-top: 20px;
+  text-align: center;
 }
 </style>
