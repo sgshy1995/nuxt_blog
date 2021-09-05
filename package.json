@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "nuxt",
-    "dev:both": "concurrently \"next dev\" \"babel -w ./src --out-dir dist --extensions .ts,.tsx\"",
-    "dev:linux": "next dev & babel -w ./src --out-dir dist --extensions .ts,.tsx",
+    "dev:both": "concurrently \"next dev\" \"babel -w ./src --out-dir build --extensions .ts,.tsx\"",
+    "dev:linux": "next dev & babel -w ./src --out-dir build --extensions .ts,.tsx",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
