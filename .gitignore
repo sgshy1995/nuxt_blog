@@ -91,3 +91,6 @@ sw.*
 
 # docker database
 /database/
+
+# .local
+*.local

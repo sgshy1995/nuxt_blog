@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "nuxt",
-    "dev:both": "concurrently \"next dev\" \"babel -w ./src --out-dir build --extensions .ts,.tsx\"",
-    "dev:linux": "next dev & babel -w ./src --out-dir build --extensions .ts,.tsx",
+    "dev:both": "concurrently \"nuxt\" \"babel -w ./src --out-dir build --extensions .ts,.tsx\"",
+    "dev:linux": "nuxt & babel -w ./src --out-dir build --extensions .ts,.tsx",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
@@ -15,7 +15,8 @@
     "typeorm:build:watch": "babel -w ./src --out-dir build --extensions .ts,.tsx",
     "migration:create": "typeorm migration:create -n CreatePost",
     "migration:run": "typeorm migration:run",
-    "migration:revert": "typeorm migration:revert"
+    "migration:revert": "typeorm migration:revert",
+    "entity:create": "typeorm entity:create -n Post"
   },
   "dependencies": {
     "@babel/cli": "^7.15.4",
