@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "emitDecoratorMetadata": true,
-    "target": "ES2018",
-    "module": "commonjs",
+    "target": "esnext",
+    "module": "esnext",
     "moduleResolution": "Node",
     "lib": [
       "ESNext",

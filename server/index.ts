@@ -5,7 +5,7 @@ const { Nuxt, Builder } = require('nuxt')
 const app = new Koa()
 
 // Import and Set Nuxt.js options
-let config = require('@/nuxt.config.js')
+let config = require('../nuxt.config')
 config.dev = !(app.env === 'production')
 
 async function start() {
@@ -35,7 +35,7 @@ async function start() {
 
   app.listen(port, host)
   consola.ready({
-    message: `Server listening on http://${host}:${port}`,
+    message: `☆☆☆☆☆ Server listening on http://${host}:${port} ☆☆☆☆☆`,
     badge: true
   })
 }
