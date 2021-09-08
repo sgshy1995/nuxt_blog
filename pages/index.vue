@@ -1,30 +1,43 @@
 <template>
-  <Tutorial :user="user"/>
+  <Tutorial :user="user" :info="info"/>
 </template>
 
 <script lang="ts">
 import {Vue, Component} from 'vue-property-decorator';
 import {Context} from '@nuxt/types';
-
-type User = {
-  username: string;
-}
+import Tutorial from '@/components/Tutorial.vue';
+import {UAParser} from 'ua-parser-js';
 
 @Component({
+  components: {
+    Tutorial
+  },
   async asyncData(ctx: Context): Promise<{ [key: string]: any; } | never> {
-    console.log('ctx', ctx.query);
-    const user = {
-      username: 'sgs'
-    };
-    const promise = new Promise(resolve => {
-      setTimeout(() => {
-        resolve(user);
-      }, 0);
+
+    const {$axios, error, req} = ctx;
+
+    // 获取 user-agent
+    const ua = req.headers['user-agent'];
+    const info = new UAParser(ua).getResult();
+    Object.keys(info).map(key => {
+      const infoInner: any = (info as any)[key];
+      Object.keys(infoInner).map(keyIn => {
+        if (!infoInner[keyIn]) infoInner[keyIn] = null;
+      });
     });
-    const user_get = await promise;
+
+    // ssr userinfo
+    let user: User = {
+      username: ''
+    };
+    const response = await $axios.$post('/api/userinfo');
+    if (response && response.status) {
+      user = response.data;
+    }
     return {
       query: ctx.query,
-      user: user_get
+      user,
+      info
     };
   },
   layout: 'GlobalLayout',
@@ -35,5 +48,13 @@ type User = {
 export default class App extends Vue {
   query: { [key: string]: any } = {};
   user: User = {username: ''};
+  info: Info = {};
+
+  created() {
+    this.$axios.$post("/api/login",{
+      username: 'sgs',
+      password: '123456'
+    });
+  }
 }
 </script>

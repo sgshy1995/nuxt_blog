@@ -102,3 +102,31 @@ interface PaginationInterface {
   showSizeChanger: boolean
   total: number
 }
+
+type Info = {
+  browser?: {
+    name: string;
+    version: string;
+    major: string;
+  };
+  device?: {
+    type: string;
+    model: string;
+    vendor: string;
+  };
+  cpu?: {
+    architecture: string | undefined;
+  };
+  os?: {
+    name: string;
+    version: string;
+  };
+  engine?: {
+    name: string;
+    version: string;
+  };
+}
+
+type User = {
+  username: string;
+}

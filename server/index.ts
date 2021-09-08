@@ -1,8 +1,23 @@
+const routerIn = require('./router');
+
 const Koa = require('koa')
 const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
+const json = require('koa-json');
+const bodyParser = require('koa-bodyparser');
 
 const app = new Koa()
+
+app.use(json());
+
+app.use(bodyParser({
+  enableTypes:['json', 'form', 'text']
+}))
+
+app.keys = ["some secret", "another secret"];
+
+// 注册路由
+app.use(routerIn.routes());
 
 // Import and Set Nuxt.js options
 let config = require('../nuxt.config')
@@ -40,4 +55,4 @@ async function start() {
   })
 }
 
-start().then()
+start().then();
