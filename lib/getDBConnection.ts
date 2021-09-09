@@ -3,7 +3,7 @@ import {User} from '@/src/entity/User';
 import {Post} from '@/src/entity/Post';
 import {Discussion} from '@/src/entity/Discussion';
 import 'reflect-metadata';
-import ormconfig from 'ormconfig';
+const ormconfig = require('@/ormconfig');
 import {PostgresConnectionOptions} from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
 // 解决 js 无法识别 metadata 的问题
