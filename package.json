@@ -39,7 +39,7 @@
     "@nuxt/typescript-build": "^2.1.0",
     "@types/koa-bodyparser": "^4.3.3",
     "@types/koa-router": "^7.4.4",
-    "@types/node": "^16.7.10",
+    "@types/node": "^16.9.0",
     "@types/ua-parser-js": "^0.7.36",
     "@vue/babel-preset-app": "^4.5.13",
     "@vue/test-utils": "^1.2.1",
