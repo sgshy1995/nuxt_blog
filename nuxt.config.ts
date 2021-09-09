@@ -55,5 +55,10 @@ module.exports = {
   },
 
   // 关闭“Are you interested in participation?”
-  telemetry: false
+  telemetry: false,
+
+  // server options
+  server: {
+    port: 8000 // default: 3000
+  }
 }

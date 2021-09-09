@@ -1,9 +1,8 @@
 
-
 type Post = {
-  title :string;
+  title: string;
   id: string;
-  date :string;
+  date: string;
   content: string;
   htmlContent: string;
 }
@@ -60,16 +59,16 @@ interface SpaceColInterface {
 /* Columns Interface */
 
 interface ColumnItem {
-  title: string
-  align?: string
-  dataIndex: string
-  key?: string
-  ellipsis?: true
-  width: number
-  filter?: any
-  disabled?: boolean
-  scopedSlots?: { customRender: string }
-  customRender?: Function
+  title: string;
+  align?: string;
+  dataIndex: string;
+  key?: string;
+  ellipsis?: true;
+  width: number;
+  filter?: any;
+  disabled?: boolean;
+  scopedSlots?: { customRender: string };
+  customRender?: Function;
 }
 
 interface ColumnsInterface extends Array<ColumnItem> {
@@ -79,10 +78,10 @@ interface ColumnsInterface extends Array<ColumnItem> {
 /* Select Interface */
 
 interface SelectItem {
-  value: string | number
-  label: string
-  title?: string
-  disabled?: boolean
+  value: string | number;
+  label: string;
+  title?: string;
+  disabled?: boolean;
 }
 
 interface SelectInterface extends Array<SelectItem> {
@@ -92,15 +91,18 @@ interface SelectInterface extends Array<SelectItem> {
 /* Pagination Interface */
 
 interface PaginationInterface {
-  current: number | undefined
-  pageNum?: number
-  pageSize: number
-  pageSizeOptions: Array<string>
-  showTotal(total: number, range: Array<any>): string
-  itemRender(current: number, type: string, originalElement: HTMLElement): HTMLElement
-  showQuickJumper: boolean
-  showSizeChanger: boolean
-  total: number
+  current: number | undefined;
+  pageNum?: number;
+  pageSize: number;
+  pageSizeOptions: Array<string>;
+
+  showTotal(total: number, range: Array<any>): string;
+
+  itemRender(current: number, type: string, originalElement: HTMLElement): HTMLElement;
+
+  showQuickJumper: boolean;
+  showSizeChanger: boolean;
+  total: number;
 }
 
 type Info = {
@@ -129,4 +131,16 @@ type Info = {
 
 type User = {
   username: string;
+}
+
+type FormRule = {
+  [key: string]: [{
+    required: boolean;
+    message?: string | (() => string);
+    trigger: 'blur' | 'change';
+    validator?: (rule: any, value: any, callback: Function) => any;
+    pattern?: RegExp;
+    transform?: (value: any) => any;
+    type?: string;
+  }]
 }
