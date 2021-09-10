@@ -22,9 +22,7 @@
           </template>
           <div class="login">当前登录用户为： {{ user.username || '-' }}</div>
           <div class="device-info">
-            <div>您的浏览器是 <span class="info-tips">{{ (info.browser && info.browser.name) || '未知' }}</span>，版本为 <span class="info-tips">{{ (info.browser && info.browser.version) || '未知' }}</span></div>
-            <div>您的操作系统是 <span class="info-tips">{{ (info.os && info.os.name) || '未知' }}</span>，版本为 <span class="info-tips">{{ (info.os && info.os.version) || '未知' }}</span></div>
-            <div>您的设备型号是 <span class="info-tips">{{ (info.device && info.device.type) || '未知' }}</span></div>
+
           </div>
         </a-tooltip>
         <a-button type="primary" size="small">退出登录</a-button>

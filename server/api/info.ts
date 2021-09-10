@@ -13,4 +13,4 @@ const info = (router: Router) => {
   });
 };
 
-module.exports = info;
+export default info;

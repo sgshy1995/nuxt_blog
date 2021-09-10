@@ -42,6 +42,7 @@
 <script lang="ts">
 import {FormModel} from 'ant-design-vue';
 import {Vue, Component, Ref} from 'vue-property-decorator';
+import {frontCreateCipher} from '~/lib/frontSecurity';
 
 @Component
 export default class Login extends Vue {
@@ -54,7 +55,7 @@ export default class Login extends Vue {
     username: [{required: true, message: '请输入用户名', trigger: 'blur'}],
     password: [{required: true, message: '请输入密码', trigger: 'blur'}],
     passwordConfirm: [{required: true, validator: this.handleConfirmPassword, trigger: 'blur'}],
-    code: [{required: true, message: '请输入验证码', trigger: 'blur'}]
+    code: [{required: true, validator: this.handleCheckCode, trigger: 'blur'}]
   };
   labelCol: SpaceColInterface = {span: 6};
   wrapperCol: SpaceColInterface = {span: 18};
@@ -69,10 +70,32 @@ export default class Login extends Vue {
   onSubmit() {
     this.FormModel.validate(valid => {
       if (valid) {
-        alert('submit!');
-      } else {
-        console.log('error submit!!');
-        return false;
+        // 获取公钥，公钥的环境变量要暴露给浏览器
+        let publicKey = process.env.NEXT_PUBLIC_FRONT_KEY;
+        // 加密
+        const {secret: secretP, secretTag: secretPTag} = frontCreateCipher(this.form.password, publicKey);
+        const {secret: secretPC, secretTag: secretPCTag} = frontCreateCipher(this.form.passwordConfirm, publicKey);
+
+        this.$axios.post('/api/register',{
+          username: this.form.username,
+          password: secretP,
+          passwordConfirm: secretPC,
+          passwordTag: secretPTag,
+          passwordConfirmTag: secretPCTag
+        }).then(response=>{
+          console.log('response',response)
+          this.$notification.success({ message: '注册成功', description: `欢迎您，${this.form.username}`, duration: 4 })
+          this.$router.push({path: '/'})
+          this.getTextCode()
+        }).catch(error=>{
+          console.log('error',error.response)
+          if (error.response){
+            this.$notification.error({ message: '系统提示', description: error.response.data.message, duration: 2 })
+          }else{
+            this.$notification.error({ message: '系统提示', description: '系统内部错误，请联系管理员', duration: 2 })
+          }
+          this.getTextCode()
+        })
       }
     });
   }
@@ -87,7 +110,17 @@ export default class Login extends Vue {
     } else if (value !== this.form.password) {
       callback('两次密码不一致');
     } else {
-      callback();
+      callback()
+    }
+  }
+
+  handleCheckCode(rule, value, callback) {
+    if (!value) {
+      callback('请输入验证码');
+    } else if (value.toLowerCase() !== this.loginCode.toLowerCase()) {
+      callback('请输入正确的验证码');
+    } else {
+      callback()
     }
   }
 

@@ -25,7 +25,7 @@ var _initializerWarningHelper2 = _interopRequireDefault(require("@babel/runtime/
 
 var _typeorm = require("typeorm");
 
-var _getDBConnection = require("@/lib/getDBConnection");
+var _getDBConnection = require("../../lib/getDBConnection");
 
 var _crypto = _interopRequireDefault(require("crypto"));
 
@@ -168,6 +168,7 @@ var User = (_dec = (0, _typeorm.Entity)('users'), _dec2 = (0, _typeorm.PrimaryGe
     value: function generatePasswordDigest() {
       // 后端加盐存储密码加密。获取私钥。
       var privateKey = process.env.BACK_KEY;
+      console.log('privateKey', privateKey);
 
       var hmac = _crypto["default"].createHmac("sha256", privateKey);
 

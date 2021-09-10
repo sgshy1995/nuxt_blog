@@ -40,21 +40,11 @@ import {UAParser} from 'ua-parser-js';
       info
     };
   },
-  layout: 'GlobalLayout',
-  mounted(this: App) {
-    console.log('mounted', this.user);
-  }
+  layout: 'GlobalLayout'
 })
 export default class App extends Vue {
   query: { [key: string]: any } = {};
   user: User = {username: ''};
   info: Info = {};
-
-  created() {
-    this.$axios.$post("/api/login",{
-      username: 'sgs',
-      password: '123456'
-    });
-  }
 }
 </script>

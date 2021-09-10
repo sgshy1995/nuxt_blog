@@ -29,7 +29,8 @@ module.exports = {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/typescript
-    '@nuxt/typescript-build'
+    '@nuxt/typescript-build',
+    ['@nuxtjs/dotenv', { path: './' }]
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules

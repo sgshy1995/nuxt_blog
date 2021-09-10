@@ -28,7 +28,8 @@
       "@nuxt/types",
       "@nuxtjs/axios",
       "@types/node",
-      "@types/koa-bodyparser"
+      "@types/koa-bodyparser",
+      "@types/koa-session"
     ]
   },
   "exclude": [
