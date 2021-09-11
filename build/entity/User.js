@@ -29,19 +29,20 @@ var _getDBConnection = require("../../lib/getDBConnection");
 
 var _crypto = _interopRequireDefault(require("crypto"));
 
-var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8;
+var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9;
 
-var User = (_dec = (0, _typeorm.Entity)('users'), _dec2 = (0, _typeorm.PrimaryGeneratedColumn)(), _dec3 = (0, _typeorm.Column)('varchar'), _dec4 = (0, _typeorm.Column)('text'), _dec5 = (0, _typeorm.Column)('varchar'), _dec6 = (0, _typeorm.CreateDateColumn)(), _dec7 = (0, _typeorm.UpdateDateColumn)(), _dec8 = (0, _typeorm.OneToMany)('Post', 'author'), _dec9 = (0, _typeorm.OneToMany)('Discussion', 'id'), _dec10 = (0, _typeorm.BeforeInsert)(), _dec(_class = (_class2 = /*#__PURE__*/function () {
+var User = (_dec = (0, _typeorm.Entity)('users'), _dec2 = (0, _typeorm.PrimaryGeneratedColumn)(), _dec3 = (0, _typeorm.Column)('varchar'), _dec4 = (0, _typeorm.Column)('varchar'), _dec5 = (0, _typeorm.Column)('text'), _dec6 = (0, _typeorm.Column)('varchar'), _dec7 = (0, _typeorm.CreateDateColumn)(), _dec8 = (0, _typeorm.UpdateDateColumn)(), _dec9 = (0, _typeorm.OneToMany)('Post', 'author'), _dec10 = (0, _typeorm.OneToMany)('Discussion', 'id'), _dec11 = (0, _typeorm.BeforeInsert)(), _dec(_class = (_class2 = /*#__PURE__*/function () {
   function User() {
     (0, _classCallCheck2["default"])(this, User);
     (0, _initializerDefineProperty2["default"])(this, "id", _descriptor, this);
     (0, _initializerDefineProperty2["default"])(this, "username", _descriptor2, this);
-    (0, _initializerDefineProperty2["default"])(this, "avatar", _descriptor3, this);
-    (0, _initializerDefineProperty2["default"])(this, "passwordDigest", _descriptor4, this);
-    (0, _initializerDefineProperty2["default"])(this, "createdAt", _descriptor5, this);
-    (0, _initializerDefineProperty2["default"])(this, "updatedAt", _descriptor6, this);
-    (0, _initializerDefineProperty2["default"])(this, "posts", _descriptor7, this);
-    (0, _initializerDefineProperty2["default"])(this, "discussions", _descriptor8, this);
+    (0, _initializerDefineProperty2["default"])(this, "nickname", _descriptor3, this);
+    (0, _initializerDefineProperty2["default"])(this, "avatar", _descriptor4, this);
+    (0, _initializerDefineProperty2["default"])(this, "passwordDigest", _descriptor5, this);
+    (0, _initializerDefineProperty2["default"])(this, "createdAt", _descriptor6, this);
+    (0, _initializerDefineProperty2["default"])(this, "updatedAt", _descriptor7, this);
+    (0, _initializerDefineProperty2["default"])(this, "posts", _descriptor8, this);
+    (0, _initializerDefineProperty2["default"])(this, "discussions", _descriptor9, this);
     (0, _defineProperty2["default"])(this, "hasError", true);
     (0, _defineProperty2["default"])(this, "result", {
       code: 422,
@@ -71,76 +72,86 @@ var User = (_dec = (0, _typeorm.Entity)('users'), _dec2 = (0, _typeorm.PrimaryGe
                 }
 
                 this.result.message = '请输入用户名';
-                _context.next = 35;
+                _context.next = 39;
                 break;
 
               case 7:
-                if (/[a-zA-Z0-9]/g.test(this.username.trim())) {
+                if (!(!this.nickname || !this.nickname.trim())) {
                   _context.next = 11;
                   break;
                 }
 
-                this.result.message = '用户名只能包含英文或数字';
-                _context.next = 35;
+                this.result.message = '请输入昵称';
+                _context.next = 39;
                 break;
 
               case 11:
-                if (!(this.username.length > 14)) {
+                if (/[a-zA-Z0-9]/g.test(this.username.trim())) {
                   _context.next = 15;
                   break;
                 }
 
-                this.result.message = '用户名长度不可超出14位';
-                _context.next = 35;
+                this.result.message = '用户名只能包含英文或数字';
+                _context.next = 39;
                 break;
 
               case 15:
-                if (this.password) {
+                if (!(this.username.length > 14)) {
                   _context.next = 19;
                   break;
                 }
 
-                this.result.message = '请输入密码';
-                _context.next = 35;
+                this.result.message = '用户名长度不可超出14位';
+                _context.next = 39;
                 break;
 
               case 19:
-                if (!(this.password.length < 8 || this.password.length > 18)) {
+                if (this.password) {
                   _context.next = 23;
                   break;
                 }
 
-                this.result.message = '请输入8至18位密码';
-                _context.next = 35;
+                this.result.message = '请输入密码';
+                _context.next = 39;
                 break;
 
               case 23:
-                if (this.passwordConfirm) {
+                if (!(this.password.length < 8 || this.password.length > 18)) {
                   _context.next = 27;
                   break;
                 }
 
-                this.result.message = '请输入确认密码';
-                _context.next = 35;
+                this.result.message = '请输入8至18位密码';
+                _context.next = 39;
                 break;
 
               case 27:
-                if (!(this.password !== this.passwordConfirm)) {
+                if (this.passwordConfirm) {
                   _context.next = 31;
                   break;
                 }
 
-                this.result.message = '两次密码不一致';
-                _context.next = 35;
+                this.result.message = '请输入确认密码';
+                _context.next = 39;
                 break;
 
               case 31:
-                _context.next = 33;
+                if (!(this.password !== this.passwordConfirm)) {
+                  _context.next = 35;
+                  break;
+                }
+
+                this.result.message = '两次密码不一致';
+                _context.next = 39;
+                break;
+
+              case 35:
+                _context.next = 37;
                 return connection.manager.findOne(User, {
                   username: this.username
                 });
 
-              case 33:
+              case 37:
                 found = _context.sent;
 
                 if (found) {
@@ -149,7 +160,7 @@ var User = (_dec = (0, _typeorm.Entity)('users'), _dec2 = (0, _typeorm.PrimaryGe
                   this.hasError = false;
                 }
 
-              case 35:
+              case 39:
               case "end":
                 return _context.stop();
             }
@@ -186,35 +197,40 @@ var User = (_dec = (0, _typeorm.Entity)('users'), _dec2 = (0, _typeorm.PrimaryGe
   enumerable: true,
   writable: true,
   initializer: null
-}), _descriptor3 = (0, _applyDecoratedDescriptor2["default"])(_class2.prototype, "avatar", [_dec4], {
+}), _descriptor3 = (0, _applyDecoratedDescriptor2["default"])(_class2.prototype, "nickname", [_dec4], {
   configurable: true,
   enumerable: true,
   writable: true,
   initializer: null
-}), _descriptor4 = (0, _applyDecoratedDescriptor2["default"])(_class2.prototype, "passwordDigest", [_dec5], {
+}), _descriptor4 = (0, _applyDecoratedDescriptor2["default"])(_class2.prototype, "avatar", [_dec5], {
   configurable: true,
   enumerable: true,
   writable: true,
   initializer: null
-}), _descriptor5 = (0, _applyDecoratedDescriptor2["default"])(_class2.prototype, "createdAt", [_dec6], {
+}), _descriptor5 = (0, _applyDecoratedDescriptor2["default"])(_class2.prototype, "passwordDigest", [_dec6], {
   configurable: true,
   enumerable: true,
   writable: true,
   initializer: null
-}), _descriptor6 = (0, _applyDecoratedDescriptor2["default"])(_class2.prototype, "updatedAt", [_dec7], {
+}), _descriptor6 = (0, _applyDecoratedDescriptor2["default"])(_class2.prototype, "createdAt", [_dec7], {
   configurable: true,
   enumerable: true,
   writable: true,
   initializer: null
-}), _descriptor7 = (0, _applyDecoratedDescriptor2["default"])(_class2.prototype, "posts", [_dec8], {
+}), _descriptor7 = (0, _applyDecoratedDescriptor2["default"])(_class2.prototype, "updatedAt", [_dec8], {
   configurable: true,
   enumerable: true,
   writable: true,
   initializer: null
-}), _descriptor8 = (0, _applyDecoratedDescriptor2["default"])(_class2.prototype, "discussions", [_dec9], {
+}), _descriptor8 = (0, _applyDecoratedDescriptor2["default"])(_class2.prototype, "posts", [_dec9], {
   configurable: true,
   enumerable: true,
   writable: true,
   initializer: null
-}), (0, _applyDecoratedDescriptor2["default"])(_class2.prototype, "generatePasswordDigest", [_dec10], Object.getOwnPropertyDescriptor(_class2.prototype, "generatePasswordDigest"), _class2.prototype)), _class2)) || _class);
+}), _descriptor9 = (0, _applyDecoratedDescriptor2["default"])(_class2.prototype, "discussions", [_dec10], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: null
+}), (0, _applyDecoratedDescriptor2["default"])(_class2.prototype, "generatePasswordDigest", [_dec11], Object.getOwnPropertyDescriptor(_class2.prototype, "generatePasswordDigest"), _class2.prototype)), _class2)) || _class);
 exports.User = User;

@@ -20,6 +20,9 @@ export class User {
   @Column('varchar')
   username: string;
 
+  @Column('varchar')
+  nickname: string;
+
   @Column('text')
   avatar: string | null | undefined;
 
@@ -55,7 +58,9 @@ export class User {
     const connection = await getDBConnection();
     if (!this.username || !this.username.trim()) {
       this.result.message = '请输入用户名';
-    } else if (!/[a-zA-Z0-9]/g.test(this.username.trim())) {
+    } else if (!this.nickname || !this.nickname.trim()) {
+      this.result.message = '请输入昵称';
+    }else if (!/[a-zA-Z0-9]/g.test(this.username.trim())) {
       this.result.message = '用户名只能包含英文或数字';
     } else if (this.username.length > 14) {
       this.result.message = '用户名长度不可超出14位';

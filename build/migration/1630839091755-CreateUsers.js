@@ -45,6 +45,10 @@ var CreateUsers1630839091755 = /*#__PURE__*/function () {
                     type: 'varchar',
                     isNullable: false
                   }, {
+                    name: 'nickname',
+                    type: 'varchar',
+                    isNullable: false
+                  }, {
                     name: 'passwordDigest',
                     type: 'varchar',
                     isNullable: false

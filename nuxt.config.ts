@@ -52,7 +52,10 @@ module.exports = {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
+
+  extensions: ['ts', 'tsx'],
   build: {
+    additionalExtensions: ['ts', 'tsx']
   },
 
   // 关闭“Are you interested in participation?”

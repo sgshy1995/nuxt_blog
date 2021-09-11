@@ -10,7 +10,7 @@ const register = (router: Router) => {
     console.log('ctx.session', ctx.session);
 
 
-    if (!fields.password || !fields.passwordConfirm || !fields.passwordTag || !fields.passwordConfirmTag){
+    if (!fields.username || !fields.nickname || !fields.password || !fields.passwordConfirm || !fields.passwordTag || !fields.passwordConfirmTag){
       ctx.status = 422;
       ctx.body = {
         code: 422,
@@ -21,7 +21,6 @@ const register = (router: Router) => {
       // 获取公钥，公钥的环境变量要暴露给浏览器
       const publicKey = process.env.NEXT_PUBLIC_FRONT_KEY;
 
-      console.log('publicKey----------',publicKey)
       // 解密
       const decipherP = crypto.createDecipher("aes-256-gcm", publicKey);
       decipherP.setAuthTag(stringToUint8Array(fields.passwordTag || ''));
@@ -35,11 +34,13 @@ const register = (router: Router) => {
 
       //const {username, password, passwordConfirm} = req.body as { [key: string]: string };
       const username: string = fields.username;
+      const nickname: string = fields.nickname;
       const connection = await getDBConnection();
 
       const user = new User();
       user.username = username;
       user.password = password;
+      user.nickname = nickname;
       user.passwordConfirm = passwordConfirm;
 
       await user.validate()

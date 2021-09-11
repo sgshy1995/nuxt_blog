@@ -8,6 +8,9 @@
       <a-form-model-item label="用户名" prop="username">
         <a-input v-model="form.username" placeholder="请输入用户名"/>
       </a-form-model-item>
+      <a-form-model-item label="昵称" prop="nickname">
+        <a-input v-model="form.nickname" placeholder="请输入昵称"/>
+      </a-form-model-item>
       <a-form-model-item label="密码" prop="password">
         <a-input-password v-model="form.password" placeholder="请输入密码"/>
       </a-form-model-item>
@@ -33,6 +36,11 @@
           <a-button style="margin-left: 20px" @click="onBackLogin">
             返回登录
           </a-button>
+          <NuxtLink to="/">
+            <a-button style="margin-left: 20px">
+              返回首页
+            </a-button>
+          </NuxtLink>
         </div>
       </a-form-model-item>
     </a-form-model>
@@ -48,11 +56,13 @@ import {frontCreateCipher} from '~/lib/frontSecurity';
 export default class Login extends Vue {
   form: FormInterface = {
     name: '',
+    nickname: '',
     password: '',
     passwordConfirm: ''
   };
   rules: FormRule = {
     username: [{required: true, message: '请输入用户名', trigger: 'blur'}],
+    nickname: [{required: true, message: '请输入昵称', trigger: 'blur'}],
     password: [{required: true, message: '请输入密码', trigger: 'blur'}],
     passwordConfirm: [{required: true, validator: this.handleConfirmPassword, trigger: 'blur'}],
     code: [{required: true, validator: this.handleCheckCode, trigger: 'blur'}]
@@ -78,6 +88,7 @@ export default class Login extends Vue {
 
         this.$axios.post('/api/register',{
           username: this.form.username,
+          nickname: this.form.nickname,
           password: secretP,
           passwordConfirm: secretPC,
           passwordTag: secretPTag,
@@ -102,6 +113,10 @@ export default class Login extends Vue {
 
   onBackLogin() {
 
+  }
+
+  onBackHome() {
+    this.$router.push({path: '/'})
   }
 
   handleConfirmPassword(rule, value, callback) {
