@@ -56,12 +56,12 @@ import {UAParser} from 'ua-parser-js';
   layout: 'GlobalLayout',
   mounted(){
     console.log('state',this.$store.state)
-    this.$store.dispatch('user/setUserInfo',{
+    /*this.$store.dispatch('user/setUserInfo',{
       username: 'sgs123',
       avatar: '123321',
       nickname: 'haha123',
       id: 2
-    })
+    })*/
   }
 })
 export default class App extends Vue {
