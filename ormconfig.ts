@@ -1,6 +1,6 @@
 module.exports = {
    "type": "postgres",
-   "host": "localhost",
+   "host": process.env.NODE_ENV === "production" ? "host.docker.internal" : "localhost",
    "port": 5432,
    "username": "blog",
    "password": "sgs19950218",
