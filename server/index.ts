@@ -64,6 +64,9 @@ async function start() {
 
   // 监听所有路由
   app.use(ctx => {
+    ctx.set('Access-Control-Allow-Origin', '*');
+    ctx.set('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
+    ctx.set('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
     ctx.status = 200;
     ctx.respond = false; // Bypass Koa's built-in response handling
     //ctx.req.ctx = ctx; // This might be useful later on, e.g. in nuxtServerInit or with nuxt-stash
