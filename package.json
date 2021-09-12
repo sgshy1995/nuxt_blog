@@ -5,8 +5,10 @@
   "scripts": {
     "dev:nuxt": "nuxt",
     "dev": "cross-env NODE_ENV=development nodemon server/index.ts --watch server --exec babel-node --extensions .ts,.tsx & babel -w ./src --out-dir build --extensions .ts,.tsx",
+    "product": "cross-env NODE_ENV=production nodemon server/index.ts --watch serve --exec babel-node --extensions .ts,.tsx ",
     "dev:both": "concurrently \"nuxt\" \"babel -w ./src --out-dir build --extensions .ts,.tsx\"",
     "dev:linux": "nuxt & babel -w ./src --out-dir build --extensions .ts,.tsx",
+    "babel:build": "babel ./src --out-dir build --extensions .ts,.tsx",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",

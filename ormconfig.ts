@@ -4,7 +4,7 @@ module.exports = {
    "port": 5432,
    "username": "blog",
    "password": "sgs19950218",
-   "database": "blog_development",
+   "database": process.env.NODE_ENV === "production" ? "blog_production" : "blog_development",
    "synchronize": false,
    "logging": false,
    "entities": [
