@@ -41,7 +41,7 @@
     "@babel/preset-typescript": "^7.15.0",
     "@koa/cors": "^3.1.0",
     "@nuxt/types": "^2.15.7",
-    "@nuxt/typescript": "2.6.2",
+    "@nuxt/typescript": "2.8.1",
     "@nuxt/typescript-build": "^2.1.0",
     "@types/koa-bodyparser": "^4.3.3",
     "@types/koa-generic-session": "^1.0.6",
