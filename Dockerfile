@@ -19,9 +19,9 @@ RUN yarn install --production=false
 
 # Bundle app source
 
-RUN yarn build
-
 COPY . .
+
+RUN yarn build
 
 EXPOSE 8000
 
