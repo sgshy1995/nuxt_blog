@@ -1,6 +1,7 @@
 import {getDBConnection} from '@/lib/getDBConnection';
 import crypto from 'crypto';
 import {User} from '~/src/entity/User';
+import _ from 'lodash';
 
 export class SignIn {
   username: string;
@@ -13,7 +14,7 @@ export class SignIn {
     message: '',
     status: false
   };
-  user: User;
+  user: ShowUser;
 
   async validate() {
     const connection = await getDBConnection();
@@ -31,7 +32,10 @@ export class SignIn {
         if (this.passwordDigest === user.passwordDigest) {
           this.hasError = false;
           // 记录 user 信息，以便后面记录 session
-          this.user = user
+          const showUser = _.pickBy(user, (value, key) => {
+            return ['username', 'id', 'avatar', 'nickname'].indexOf(key) > -1;
+          });
+          this.user = <ShowUser>showUser
         } else {
           this.result.message = '用户名或密码错误';
         }

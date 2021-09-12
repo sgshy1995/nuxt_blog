@@ -133,6 +133,13 @@ type User = {
   username: string;
 }
 
+type ShowUser = {
+  avatar: string | null;
+  id: number;
+  username: string;
+  nickname: string;
+}
+
 type FormRule = {
   [key: string]: [{
     required: boolean;

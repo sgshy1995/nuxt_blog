@@ -29,14 +29,12 @@ import {UAParser} from 'ua-parser-js';
         });
       });
 
-      console.log('state',ctx.store.state)
-
-      await ctx.store.dispatch('user/setUserInfo',{
+      /*await ctx.store.dispatch('user/setUserInfo',{
         username: 'sgs',
         avatar: '123',
         nickname: 'haha',
         id: 1
-      })
+      })*/
 
       // ssr userinfo
       let user: User = {

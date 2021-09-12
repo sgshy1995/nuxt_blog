@@ -23,6 +23,8 @@ var _crypto = _interopRequireDefault(require("crypto"));
 
 var _User = require("../entity/User");
 
+var _lodash = _interopRequireDefault(require("lodash"));
+
 var SignIn = /*#__PURE__*/function () {
   function SignIn() {
     (0, _classCallCheck2["default"])(this, SignIn);
@@ -38,7 +40,7 @@ var SignIn = /*#__PURE__*/function () {
     key: "validate",
     value: function () {
       var _validate = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee() {
-        var connection, user, privateKey, hmac;
+        var connection, user, privateKey, hmac, showUser;
         return _regenerator["default"].wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -88,7 +90,10 @@ var SignIn = /*#__PURE__*/function () {
                   if (this.passwordDigest === user.passwordDigest) {
                     this.hasError = false; // 记录 user 信息，以便后面记录 session
 
-                    this.user = user;
+                    showUser = _lodash["default"].pickBy(user, function (value, key) {
+                      return ['username', 'id', 'avatar', 'nickname'].indexOf(key) > -1;
+                    });
+                    this.user = showUser;
                   } else {
                     this.result.message = '用户名或密码错误';
                   }

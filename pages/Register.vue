@@ -2,14 +2,20 @@
   <div class="login-wrapper">
     <div class="title">
       <a-icon class="title-icon" type="dribbble-square"/>
-      <span>欢迎登录博客系统</span>
+      <span>欢迎注册博客系统</span>
     </div>
     <a-form-model ref="FormModel" :rules="rules" :model="form" :label-col="labelCol" :wrapper-col="wrapperCol">
       <a-form-model-item label="用户名" prop="username">
         <a-input v-model="form.username" placeholder="请输入用户名"/>
       </a-form-model-item>
+      <a-form-model-item label="昵称" prop="nickname">
+        <a-input v-model="form.nickname" placeholder="请输入昵称"/>
+      </a-form-model-item>
       <a-form-model-item label="密码" prop="password">
         <a-input-password v-model="form.password" placeholder="请输入密码"/>
+      </a-form-model-item>
+      <a-form-model-item label="确认密码" prop="passwordConfirm">
+        <a-input-password v-model="form.passwordConfirm" placeholder="请输入确认密码"/>
       </a-form-model-item>
       <a-form-model-item class="code-wrapper" label="验证码" prop="code">
         <a-input class="input-code" v-model="form.code" placeholder="请输入验证码"/>
@@ -25,11 +31,11 @@
       <a-form-model-item>
         <div class="button-wrapper">
           <a-button type="primary" @click="onSubmit">
-            登录
+            注册
           </a-button>
-          <NuxtLink to="/register">
+          <NuxtLink to="/login">
             <a-button style="margin-left: 20px">
-              前往注册
+              返回登录
             </a-button>
           </NuxtLink>
           <NuxtLink to="/">
@@ -49,7 +55,7 @@ import {Vue, Component, Ref} from 'vue-property-decorator';
 import {frontCreateCipher} from '~/lib/frontSecurity';
 
 @Component
-export default class Login extends Vue {
+export default class Register extends Vue {
   form: FormInterface = {
     name: '',
     nickname: '',
@@ -58,7 +64,9 @@ export default class Login extends Vue {
   };
   rules: FormRule = {
     username: [{required: true, message: '请输入用户名', trigger: 'blur'}],
+    nickname: [{required: true, message: '请输入昵称', trigger: 'blur'}],
     password: [{required: true, message: '请输入密码', trigger: 'blur'}],
+    passwordConfirm: [{required: true, validator: this.handleConfirmPassword, trigger: 'blur'}],
     code: [{required: true, validator: this.handleCheckCode, trigger: 'blur'}]
   };
   labelCol: SpaceColInterface = {span: 6};
@@ -78,18 +86,20 @@ export default class Login extends Vue {
         let publicKey = process.env.NEXT_PUBLIC_FRONT_KEY;
         // 加密
         const {secret: secretP, secretTag: secretPTag} = frontCreateCipher(this.form.password, publicKey);
+        const {secret: secretPC, secretTag: secretPCTag} = frontCreateCipher(this.form.passwordConfirm, publicKey);
 
-        this.$axios.post('/api/login',{
+        this.$axios.post('/api/register',{
           username: this.form.username,
+          nickname: this.form.nickname,
           password: secretP,
-          passwordTag: secretPTag
+          passwordConfirm: secretPC,
+          passwordTag: secretPTag,
+          passwordConfirmTag: secretPCTag
         }).then(response=>{
-          console.log('response',response)
-          this.$notification.success({ message: '登录成功', description: `欢迎您，${this.form.username}`, duration: 4 })
+          this.$notification.success({ message: '注册成功', description: `欢迎您，${this.form.username}`, duration: 4 })
           this.$router.push({path: '/'})
           this.getTextCode()
         }).catch(error=>{
-          console.log('error',error.response)
           if (error.response){
             this.$notification.error({ message: '系统提示', description: error.response.data.message, duration: 2 })
           }else{
@@ -99,6 +109,16 @@ export default class Login extends Vue {
         })
       }
     });
+  }
+
+  handleConfirmPassword(rule, value, callback) {
+    if (!value) {
+      callback('请输入确认密码');
+    } else if (value !== this.form.password) {
+      callback('两次密码不一致');
+    } else {
+      callback()
+    }
   }
 
   handleCheckCode(rule, value, callback) {

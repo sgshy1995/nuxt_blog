@@ -19,6 +19,12 @@ const actions = {
       });
     });
     commit("useragent/commitUseragent", info)
+    // 登录用户信息
+    const promise = await app.$axios.get('/api/userinfo')
+    if (promise){
+      const userInfo = promise.data.data
+      commit("user/commitUserInfo", userInfo)
+    }
   }
 }
 
@@ -27,4 +33,4 @@ function initialiseStores(store: Store<any>): void {
   UseragentModule = getModule(Useragent, store)
 }
 
-export { initialiseStores, UserModule, UseragentModule, actions }
+export { initialiseStores, UserModule, UseragentModule }

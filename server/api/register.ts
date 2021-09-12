@@ -3,6 +3,7 @@ import crypto from 'crypto';
 import {stringToUint8Array} from '@/lib/bufferSwitchString';
 import {getDBConnection} from '@/lib/getDBConnection';
 import {User} from '@/src/entity/User';
+import _ from 'lodash';
 
 const register = (router: Router) => {
   router.post("/register", async (ctx) => {
@@ -51,6 +52,10 @@ const register = (router: Router) => {
         user.result.status = true;
         ctx.status = 200;
         await connection.manager.save(user)
+        const userGet = await connection.manager.findOne(User, {where: {username: user.username}});
+        ctx.session.user = _.pickBy(userGet, (value, key) => {
+          return ['username', 'id', 'avatar', 'nickname'].indexOf(key) > -1;
+        });
       } else {
         ctx.status = 422;
       }

@@ -37,17 +37,21 @@
                       <div>您的设备型号是 <div class="info-tips">{{ (info.device && info.device.type) || '未知' }}</div></div>
                     </div>
                     <div class="ready-login">
-                      <span class="user-name">欢迎您， <span>{{ '南屋流星' }}</span></span>
+                      <span class="user-name">欢迎您， <span>{{ userInfo.nickname }}</span></span>
                       <a-avatar class="user-avatar" :src="avatar" :size="38" />
                     </div>
                   </a-tooltip>
                   <div class="not-login" v-else>
-                    <a-button ghost size="small" type="link">
-                      <span style="color: #1081e8">登录</span>
-                    </a-button>
-                    <a-button ghost size="small" type="link">
-                      <span style="color: #1081e8">注册</span>
-                    </a-button>
+                    <nuxt-link to="/login">
+                      <a-button ghost size="small" type="link">
+                        <span style="color: #1081e8">登录</span>
+                      </a-button>
+                    </nuxt-link>
+                    <nuxt-link to="/register">
+                      <a-button ghost size="small" type="link">
+                        <span style="color: #1081e8">注册</span>
+                      </a-button>
+                    </nuxt-link>
                   </div>
                 </a-col>
               </a-row>
@@ -65,13 +69,14 @@
 
 <script lang="ts">
 import {Vue, Component} from 'vue-property-decorator';
-import {UserState} from '~/store/user';
 
-@Component
+@Component({
+  middleware: ['getUserInfo']
+})
 export default class GlobalLayout extends Vue {
   avatar:string = require('@/assets/avatar.jpeg')
   info: Info = this.$store.state.useragent.info
-  userInfo:UserState = this.$store.state.user.userInfo || null
+  userInfo:ShowUser = this.$store.state.user.userInfo || null
 }
 </script>
 

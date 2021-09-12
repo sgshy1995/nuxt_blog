@@ -3,7 +3,8 @@ import Router from 'koa-router';
 
 const router: Router = require("koa-router")({prefix: "/api"});
 import infoIn from './api/info';
-import loginIn from './api/register';
+import register from './api/register';
+import login from '~/server/api/login';
 
 // 设置cookie加密秘钥
 
@@ -30,8 +31,11 @@ router.get("/detail", ctx => {
   };
 });
 
+// 注册
+register(router);
+
 // 登录
-loginIn(router);
+login(router);
 
 // 获取用户信息
 infoIn(router);
