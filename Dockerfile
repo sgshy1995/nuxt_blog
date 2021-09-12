@@ -1,6 +1,6 @@
 FROM node:14
 ENV NODE_ENV=production
-ENV HOST 0.0.0.0
+# ENV HOST 0.0.0.0
 
 # Create app directory
 WORKDIR /usr/src/app

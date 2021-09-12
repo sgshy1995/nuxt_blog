@@ -5,16 +5,16 @@
       <a-layout>
         <a-layout-header>
           <a-row :gutter="32">
-            <a-col span="18">
+            <a-col :md="24" :lg="18">
               <div class="article-search">
                 <a-input size="large" placeholder="请输入文章标题搜索">
                   <a-icon slot="suffix" type="search" style="color: #1081e8" />
                 </a-input>
               </div>
             </a-col>
-            <a-col span="6" :gutter="32" class="user-board" type="flex" justify="space-between" align="center" >
+            <a-col :md="24" :lg="6" :gutter="32" class="user-board" type="flex" justify="space-between" align="center" >
               <a-row class="info-out">
-                <a-col span="6" class="user-message">
+                <a-col span="7" class="user-message">
                   <a-badge count="44" :numberStyle="{background: '#f82485', borderRadius: '50%', width: '24px', height: '24px', padding: '0', textAlign: 'center', lineHeight: '24px', fontSize: '12px'}">
                     <span class="tips">
                       <a-icon theme="filled" type="bulb" style="font-size: 18px;color: #1081e8" />
@@ -29,7 +29,7 @@
                 <a-col span="2" class="divider">
                   <a-divider type="vertical" />
                 </a-col>
-                <a-col span="16" class="user-info">
+                <a-col span="15" class="user-info">
                   <a-tooltip v-if="userInfo">
                     <div slot="title">
                       <div style="margin-bottom: 24px">您的浏览器是 <div class="info-tips">{{ (info.browser && info.browser.name) || '未知' }}</div>版本为 <div class="info-tips">{{ (info.browser && info.browser.version) || '未知' }}</div></div>
@@ -102,6 +102,8 @@ export default class GlobalLayout extends Vue {
       background: #fff;
     }
 
+
+
     .ant-layout-header{
       background: #f8f8f8;
       padding: 32px;
@@ -110,6 +112,7 @@ export default class GlobalLayout extends Vue {
 
       .article-search{
         width: 100%;
+        margin-bottom: 32px;
         /deep/.ant-input{
           font-size: 14px;
           border-radius: 10px;
@@ -172,6 +175,12 @@ export default class GlobalLayout extends Vue {
         }
       }
     }
+  }
+}
+
+@media screen and (max-width: 820px) {
+  /deep/ .ant-layout-sider{
+    display: none;
   }
 }
 </style>

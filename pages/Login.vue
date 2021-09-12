@@ -163,7 +163,7 @@ export default class Login extends Vue {
 }
 
 /deep/ .ant-form {
-  width: 400px;
+  width: 330px;
   border: 2px solid #333;
   padding: 24px 24px 0 24px;
   border-radius: 10px;
@@ -198,7 +198,9 @@ export default class Login extends Vue {
 }
 
 .button-wrapper {
-  width: 352px;
-  text-align: center;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 </style>
