@@ -21,8 +21,6 @@ RUN yarn install --production=false
 
 COPY . .
 
-RUN yarn build
-
 EXPOSE 8000
 
 CMD [ "yarn", "product" ]
