@@ -9,6 +9,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 import session from 'koa-session';
+import cors from '@koa/cors'
 
 const app = new Koa();
 
@@ -17,6 +18,9 @@ app.use(json());
 app.use(bodyParser({
   enableTypes: ['json', 'form', 'text']
 }));
+
+// cors
+app.use(cors())
 
 // 使用 session
 
@@ -64,9 +68,10 @@ async function start() {
 
   // 监听所有路由
   app.use(ctx => {
-    ctx.set('Access-Control-Allow-Origin', '*');
-    ctx.set('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
-    ctx.set('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+    ctx.res.setHeader('Access-Control-Allow-Credentials','true')
+    ctx.res.setHeader('Access-Control-Allow-Origin','*')
+    ctx.res.setHeader('Access-Control-Allow-Headers','Content-Type,Content-Length,Accept,Accept-Encoding,Accept-Language,Referer,Connection,X-Access-Token,Authorization,Origin,Cache-Control,X-Requested-With,X-Check-Result,Content-Disposition,Host')
+    ctx.res.setHeader('Access-Control-Expose-Headers','Content-Type,Content-Length,Accept,Accept-Encoding,Accept-Language,Referer,Connection,X-Access-Token,Authorization,Origin,Cache-Control,X-Requested-With,X-Check-Result,Content-Disposition,Host')
     ctx.status = 200;
     ctx.respond = false; // Bypass Koa's built-in response handling
     //ctx.req.ctx = ctx; // This might be useful later on, e.g. in nuxtServerInit or with nuxt-stash

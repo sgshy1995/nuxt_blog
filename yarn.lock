@@ -1201,6 +1201,13 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
+"@koa/cors@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.npm.taobao.org/@koa/cors/download/@koa/cors-3.1.0.tgz#618bb073438cfdbd3ebd0e648a76e33b84f3a3b2"
+  integrity sha1-YYuwc0OM/b0+vQ5kinbjO4Tzo7I=
+  dependencies:
+    vary "^1.1.2"
+
 "@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.2":
   version "2.1.8-no-fsevents.2"
   resolved "https://registry.nlark.com/@nicolo-ribaudo/chokidar-2/download/@nicolo-ribaudo/chokidar-2-2.1.8-no-fsevents.2.tgz#e324c0a247a5567192dd7180647709d7e2faf94b"
@@ -6697,7 +6704,7 @@ is-ci@^3.0.0:
 
 is-class-hotfix@~0.0.6:
   version "0.0.6"
-  resolved "https://registry.npm.taobao.org/is-class-hotfix/download/is-class-hotfix-0.0.6.tgz#a527d31fb23279281dde5f385c77b5de70a72435"
+  resolved "https://registry.nlark.com/is-class-hotfix/download/is-class-hotfix-0.0.6.tgz#a527d31fb23279281dde5f385c77b5de70a72435"
   integrity sha1-pSfTH7IyeSgd3l84XHe13nCnJDU=
 
 is-color-stop@^1.0.0:
@@ -6948,7 +6955,7 @@ is-symbol@^1.0.2, is-symbol@^1.0.3:
 
 is-type-of@^1.0.0:
   version "1.2.1"
-  resolved "https://registry.npm.taobao.org/is-type-of/download/is-type-of-1.2.1.tgz#e263ec3857aceb4f28c47130ec78db09a920f8c5"
+  resolved "https://registry.nlark.com/is-type-of/download/is-type-of-1.2.1.tgz#e263ec3857aceb4f28c47130ec78db09a920f8c5"
   integrity sha1-4mPsOFes608oxHEw7HjbCakg+MU=
   dependencies:
     core-util-is "^1.0.2"
@@ -7766,7 +7773,7 @@ koa-router@^10.1.1:
 
 koa-session@^6.2.0:
   version "6.2.0"
-  resolved "https://registry.npm.taobao.org/koa-session/download/koa-session-6.2.0.tgz?cache=0&sync_timestamp=1617100248608&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fkoa-session%2Fdownload%2Fkoa-session-6.2.0.tgz#c0da2a808b520f62a25dac9f2914b580b2402078"
+  resolved "https://registry.npm.taobao.org/koa-session/download/koa-session-6.2.0.tgz#c0da2a808b520f62a25dac9f2914b580b2402078"
   integrity sha1-wNoqgItSD2KiXayfKRS1gLJAIHg=
   dependencies:
     crc "^3.4.4"
