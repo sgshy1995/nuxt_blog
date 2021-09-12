@@ -79,24 +79,24 @@ export default class Login extends Vue {
         // 加密
         const {secret: secretP, secretTag: secretPTag} = frontCreateCipher(this.form.password, publicKey);
 
-        this.$axios.post('/api/login',{
+        this.$axios.post('/api/login', {
           username: this.form.username,
           password: secretP,
           passwordTag: secretPTag
-        }).then(response=>{
-          console.log('response',response)
-          this.$notification.success({ message: '登录成功', description: `欢迎您，${this.form.username}`, duration: 4 })
-          this.$router.push({path: '/'})
-          this.getTextCode()
-        }).catch(error=>{
-          console.log('error',error.response)
-          if (error.response){
-            this.$notification.error({ message: '系统提示', description: error.response.data.message, duration: 2 })
-          }else{
-            this.$notification.error({ message: '系统提示', description: '系统内部错误，请联系管理员', duration: 2 })
+        }, {withCredentials: true}).then(response => {
+          console.log('response', response);
+          this.$notification.success({message: '登录成功', description: `欢迎您，${this.form.username}`, duration: 4});
+          this.$router.push({path: '/'});
+          this.getTextCode();
+        }).catch(error => {
+          console.log('error', error.response);
+          if (error.response) {
+            this.$notification.error({message: '系统提示', description: error.response.data.message, duration: 2});
+          } else {
+            this.$notification.error({message: '系统提示', description: '系统内部错误，请联系管理员', duration: 2});
           }
-          this.getTextCode()
-        })
+          this.getTextCode();
+        });
       }
     });
   }
@@ -107,7 +107,7 @@ export default class Login extends Vue {
     } else if (value.toLowerCase() !== this.loginCode.toLowerCase()) {
       callback('请输入正确的验证码');
     } else {
-      callback()
+      callback();
     }
   }
 

@@ -20,7 +20,7 @@ app.use(bodyParser({
 }));
 
 // cors
-app.use(cors())
+app.use(cors({credentials: true, allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS', origin: ctx=> ctx.header.origin}))
 
 // 使用 session
 
@@ -40,7 +40,7 @@ const CONFIG = {
   renew: false, /** 是否在Session快过期时刷新Session的有效期。(默认是 false) */
 };
 
-app.use(session(CONFIG, app));
+app.use(session({...CONFIG,sameSite: "none"}, app));
 
 // 注册路由
 app.use(router.routes());
@@ -54,7 +54,7 @@ async function start() {
   const nuxt = new Nuxt(config);
 
   const {
-    host = process.env.HOST || '127.0.0.1',
+    host = process.env.HOST || '0.0.0.0',
     port = process.env.PORT || 8000
   } = nuxt.options.server;
 
@@ -68,10 +68,12 @@ async function start() {
 
   // 监听所有路由
   app.use(ctx => {
+/*
     ctx.res.setHeader('Access-Control-Allow-Credentials','true')
     ctx.res.setHeader('Access-Control-Allow-Origin','*')
     ctx.res.setHeader('Access-Control-Allow-Headers','Content-Type,Content-Length,Accept,Accept-Encoding,Accept-Language,Referer,Connection,X-Access-Token,Authorization,Origin,Cache-Control,X-Requested-With,X-Check-Result,Content-Disposition,Host')
     ctx.res.setHeader('Access-Control-Expose-Headers','Content-Type,Content-Length,Accept,Accept-Encoding,Accept-Language,Referer,Connection,X-Access-Token,Authorization,Origin,Cache-Control,X-Requested-With,X-Check-Result,Content-Disposition,Host')
+*/
     ctx.status = 200;
     ctx.respond = false; // Bypass Koa's built-in response handling
     //ctx.req.ctx = ctx; // This might be useful later on, e.g. in nuxtServerInit or with nuxt-stash

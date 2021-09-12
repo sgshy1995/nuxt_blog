@@ -20,7 +20,7 @@ const actions = {
     });
     commit("useragent/commitUseragent", info)
     // 登录用户信息
-    const promise = await app.$axios.get('/api/userinfo')
+    const promise = await app.$axios.get('/api/userinfo',{withCredentials: true})
     if (promise){
       const userInfo = promise.data.data
       commit("user/commitUserInfo", userInfo)

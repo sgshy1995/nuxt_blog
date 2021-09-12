@@ -95,7 +95,7 @@ export default class Register extends Vue {
           passwordConfirm: secretPC,
           passwordTag: secretPTag,
           passwordConfirmTag: secretPCTag
-        }).then(response=>{
+        },{withCredentials: true}).then(response=>{
           this.$notification.success({ message: '注册成功', description: `欢迎您，${this.form.username}`, duration: 4 })
           this.$router.push({path: '/'})
           this.getTextCode()
