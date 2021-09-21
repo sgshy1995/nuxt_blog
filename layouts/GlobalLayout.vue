@@ -1,7 +1,29 @@
 <template>
   <div class="app">
     <a-layout>
-      <a-layout-sider>Sider</a-layout-sider>
+      <a-layout-sider>
+        <a-menu :selectedKeys="selectedKeys">
+
+          <a-menu-item key="index">
+            <nuxt-link to="/">
+              <a-icon type="appstore" /><span>首页</span>
+            </nuxt-link>
+          </a-menu-item>
+
+          <a-menu-item key="Posts">
+            <nuxt-link to="/posts">
+              <a-icon type="profile" /><span>博客</span>
+            </nuxt-link>
+          </a-menu-item>
+
+          <a-menu-item key="userinfo">
+            <nuxt-link to="/userinfo">
+              <a-icon type="user" /><span>个人信息</span>
+            </nuxt-link>
+          </a-menu-item>
+
+        </a-menu>
+      </a-layout-sider>
       <a-layout>
         <a-layout-header>
           <a-row :gutter="32">
@@ -30,7 +52,7 @@
                   <a-divider type="vertical" />
                 </a-col>
                 <a-col span="15" class="user-info">
-                  <div v-if="userInfo" class="ready-login">
+                  <div v-if="userInfo && userInfo.id" class="ready-login">
                     <span class="user-name">欢迎您， <span>{{ userInfo.nickname }}</span></span>
                     <a-avatar class="user-avatar" :src="avatar" :size="38" />
                   </div>
@@ -61,7 +83,7 @@
 </template>
 
 <script lang="ts">
-import {Vue, Component} from 'vue-property-decorator';
+import {Vue, Component, Watch} from 'vue-property-decorator';
 
 @Component({
   middleware: ['getUserInfo']
@@ -70,6 +92,15 @@ export default class GlobalLayout extends Vue {
   avatar:string = require('@/assets/avatar.jpeg')
   info: Info = this.$store.state.useragent.info
   userInfo:ShowUser = this.$store.state.user.userInfo || null
+
+  selectedKeys: string[] = []
+
+  @Watch('$route',{deep:true,immediate:true})
+  onRouteChange(){
+    console.log('$route',this.$route)
+    const key = this.$route.name
+    this.selectedKeys = [key]
+  }
 }
 </script>
 
@@ -99,7 +130,7 @@ export default class GlobalLayout extends Vue {
 
     .ant-layout-header{
       background: #f8f8f8;
-      padding: 32px;
+      padding: 32px 32px 0 32px;
       height: auto;
       line-height: unset;
 
@@ -166,6 +197,21 @@ export default class GlobalLayout extends Vue {
             cursor: pointer;
           }
         }
+      }
+    }
+  }
+}
+
+/deep/ .ant-menu{
+  padding: 24px;
+  border: none;
+  .ant-menu-item{
+    border-radius: 10px;
+    &.ant-menu-item-selected{
+      background: #1081e8;
+      color: #fff;
+      > a{
+        color: #fff;
       }
     }
   }
