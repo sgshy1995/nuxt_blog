@@ -1,5 +1,7 @@
 import router from '~/server/router';
 
+import path from 'path'
+
 import Koa from 'koa';
 import consola from 'consola';
 import {Nuxt, Builder} from 'nuxt';
@@ -20,6 +22,19 @@ app.use(json());
 app.use(bodyParser({
   enableTypes: ['json', 'form', 'text']
 }));
+
+/*import koaBody from 'koa-body'
+
+app.use(koaBody({
+  // 支持文件格式
+  multipart: true,
+  formidable: {
+    // 上传目录
+    uploadDir: path.join(__dirname, 'uploads'),
+    // 保留文件扩展名
+    keepExtensions: true,
+  }
+}));*/
 
 // cors
 //app.use(cors({credentials: true, allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS', origin: ctx=> ctx.header.origin}))
@@ -107,7 +122,10 @@ async function start() {
       nuxt.render(ctx.req, ctx.res);
     }
 
-
+    // 登录注册清空session
+    if (ctx.path.indexOf('/login')>-1 || ctx.path.indexOf('/register')>-1){
+      ctx.session = null
+    }
 
   });
 

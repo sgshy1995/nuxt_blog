@@ -1,5 +1,6 @@
 import path from 'path'
 import fs from 'fs'
+import webpack from 'webpack'
 
 module.exports = {
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -18,13 +19,20 @@ module.exports = {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    'ant-design-vue/dist/antd.css'
+    'ant-design-vue/dist/antd.css',
+    'quill/dist/quill.snow.css',
+    'quill/dist/quill.bubble.css',
+    'quill/dist/quill.core.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '@/plugins/antd-ui',
-    '@/plugins/axios'
+    '@/plugins/axios',
+    {
+      src: '@/plugins/editor',
+      ssr: false
+    }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -66,7 +74,13 @@ module.exports = {
 
   extensions: ['ts', 'tsx'],
   build: {
-    additionalExtensions: ['ts', 'tsx']
+    additionalExtensions: ['ts', 'tsx'],
+    plugins: [
+      new webpack.ProvidePlugin({
+        'window.Quill': 'quill/dist/quill.js',
+        'Quill': 'quill/dist/quill.js'
+      })
+    ]
   },
 
   // 关闭“Are you interested in participation?”

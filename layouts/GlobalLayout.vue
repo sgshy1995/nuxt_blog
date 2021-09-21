@@ -17,9 +17,7 @@
           </a-menu-item>
 
           <a-menu-item key="userinfo">
-            <nuxt-link to="/userinfo">
               <a-icon type="user" /><span>个人信息</span>
-            </nuxt-link>
           </a-menu-item>
 
         </a-menu>
@@ -34,7 +32,7 @@
                 </a-input>
               </div>
             </a-col>
-            <a-col :md="24" :xl="10" :xxl="18" :gutter="32" class="user-board" type="flex" justify="space-between" align="center" >
+            <a-col :md="24" :xl="10" :xxl="6" :gutter="32" class="user-board" type="flex" justify="space-between" align="center" >
               <a-row class="info-out">
                 <a-col span="7" class="user-message">
                   <a-badge count="44" :numberStyle="{background: '#f82485', borderRadius: '50%', width: '24px', height: '24px', padding: '0', textAlign: 'center', lineHeight: '24px', fontSize: '12px'}">
@@ -54,7 +52,14 @@
                 <a-col span="15" class="user-info">
                   <div v-if="userInfo && userInfo.id" class="ready-login">
                     <span class="user-name">欢迎您， <span>{{ userInfo.nickname }}</span></span>
-                    <a-avatar class="user-avatar" :src="avatar" :size="38" />
+                    <a-dropdown>
+                      <a-avatar class="user-avatar" :src="avatar" :size="38" />
+                      <a-menu slot="overlay">
+                        <a-menu-item @click="$notification.success({message: '退出登录', description: `请您重新登录`, duration: 4})">
+                          <nuxt-link to="/login">退出登录</nuxt-link>
+                        </a-menu-item>
+                      </a-menu>
+                    </a-dropdown>
                   </div>
                   <div class="not-login" v-else>
                     <nuxt-link to="/login">
@@ -181,6 +186,7 @@ export default class GlobalLayout extends Vue {
           display: flex;
           align-items: center;
           justify-content: center;
+          margin-bottom: 32px;
           .user-name{
             flex-shrink: 0;
             display: inline-block;
@@ -217,9 +223,27 @@ export default class GlobalLayout extends Vue {
   }
 }
 
-@media screen and (max-width: 820px) {
+@media screen and (max-width: 1199px) {
   /deep/ .ant-layout-sider{
-    display: none;
+    width: 50px !important;
+    max-width: unset !important;
+    min-width: unset !important;
+    flex: 0 0 50px !important;
+    .ant-menu{
+      padding: 12px;
+    }
+    .ant-menu-item{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 30px;
+      i{
+        margin-right: 0;
+      }
+    }
+    .ant-menu-item span{
+      display: none;
+    }
   }
 }
 </style>

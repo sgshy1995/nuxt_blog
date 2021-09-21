@@ -1,9 +1,14 @@
 <template>
   <div class="index">
     <section class="recent">
-      <div class="recent-title">最近文章</div>
-      <a-table :columns="columns" :data-source="data" :locale="{emptyText: '暂无文章'}" size="small" :borderd="false">
-
+      <div class="recent-title">社区博客</div>
+      <a-table rowKey="id" :columns="columns" :pagination="false" :data-source="postsInList" :locale="{emptyText: '暂无文章'}" :borderd="false">
+        <span slot="no" slot-scope="text,record,index">
+          {{ index+1 }}
+        </span>
+        <span slot="createdAt" slot-scope="text,record,index">
+          {{ moment(text,'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD hh:mm:ss') }}
+        </span>
       </a-table>
     </section>
   </div>
@@ -13,58 +18,33 @@
 import {Vue, Component} from 'vue-property-decorator';
 import {Context} from '@nuxt/types';
 import Tutorial from '@/components/Tutorial.vue';
-import {UAParser} from 'ua-parser-js';
+import moment from 'moment';
+import {Post} from '~/src/entity/Post';
 
 @Component({
   components: {
     Tutorial
   },
   async asyncData(ctx: Context): Promise<{ [key: string]: any; } | never> {
+    const {$axios, error, req} = ctx;
 
-    if (process.server){
-      const {$axios, error, req} = ctx;
+    let postsInList:Post[] = []
 
-      // 获取 user-agent
-      const ua = req.headers['user-agent'];
-      const info = new UAParser(ua).getResult();
-      Object.keys(info).map(key => {
-        const infoInner: any = (info as any)[key];
-        Object.keys(infoInner).map(keyIn => {
-          if (!infoInner[keyIn]) infoInner[keyIn] = null;
-        });
-      });
+    await $axios.get('/api/posts').then(response=>{
+      postsInList = response.data.data
+    })
 
-      /*await ctx.store.dispatch('user/setUserInfo',{
-        username: 'sgs',
-        avatar: '123',
-        nickname: 'haha',
-        id: 1
-      })*/
-
-      // ssr userinfo
-      let user: User = {
-        username: ''
-      };
-      /*const response = await $axios.$post('/api/userinfo');
-      if (response && response.status) {
-        user = response.data;
-      }*/
-      return {
-        query: ctx.query,
-        user,
-        info
-      };
-    }
+    return {
+      postsInList
+    };
   },
-  layout: 'GlobalLayout',
-  mounted(){
-
-  }
+  layout: 'GlobalLayout'
 })
 export default class App extends Vue {
   query: { [key: string]: any } = {};
   user: User = {username: ''};
   info: Info = {};
+  moment: Function = moment
 
   columns:ColumnsInterface = [
     {
@@ -84,8 +64,9 @@ export default class App extends Vue {
     {
       title: '发表日期',
       width: 120,
-      dataIndex: 'created_at',
-      key: 'created_at',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      scopedSlots: { customRender: 'createdAt' },
     },
     {
       title: '标签',
@@ -134,6 +115,16 @@ export default class App extends Vue {
     padding: 24px;
     border-radius: 10px;
     background: #fff;
+    box-sizing: border-box;
+    height: calc(100vh - 132px);
+    overflow: auto;
+    @media (max-width: 1199px) {
+      height: calc(100vh - 202px);
+    }
+    .ant-table-wrapper{
+      width: 100%;
+      overflow-x: auto;
+    }
     .recent-title{
       font-family: PingFangSC-Medium, sans-serif;
       font-size: 16px;

@@ -2,9 +2,10 @@
 import Router from 'koa-router';
 
 const router: Router = require("koa-router")({prefix: "/api"});
-import infoIn from './api/info';
-import register from './api/register';
-import login from '~/server/api/login';
+import infoIn from '@/server//api/info';
+import register from '@/server//api/register';
+import login from '@/server/api/login';
+import posts from '@/server/api/posts'
 
 // 设置cookie加密秘钥
 
@@ -39,6 +40,9 @@ login(router);
 
 // 获取用户信息
 infoIn(router);
+
+// 博客
+posts(router);
 
 export default router;
 
