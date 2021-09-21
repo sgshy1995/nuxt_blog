@@ -1,3 +1,6 @@
+import path from 'path'
+import fs from 'fs'
+
 module.exports = {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -20,7 +23,8 @@ module.exports = {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '@/plugins/antd-ui'
+    '@/plugins/antd-ui',
+    '@/plugins/axios'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -30,7 +34,8 @@ module.exports = {
   buildModules: [
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
-    ['@nuxtjs/dotenv', { path: './' }]
+    ['@nuxtjs/dotenv', { path: './' }],
+    '@nuxtjs/pwa'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -51,6 +56,9 @@ module.exports = {
   pwa: {
     manifest: {
       lang: 'en'
+    },
+    workbox: {
+      clientsClaim: false
     }
   },
 
@@ -66,6 +74,11 @@ module.exports = {
 
   // server options
   server: {
-    port: 8000 // default: 3000
+    port: 8000, // default: 3000
+    host: process.env.NODE_ENV === "production" ? '0.0.0.0' : 'localhost',
+    https: {
+      key: fs.readFileSync(path.resolve(__dirname, 'server.key')),
+      cert: fs.readFileSync(path.resolve(__dirname, 'server.cert'))
+    }
   }
 }

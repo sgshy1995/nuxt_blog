@@ -11,6 +11,7 @@ type Result = {
   code: number;
   message: string;
   status: boolean;
+  data?: {[key:string]:any}
 }
 
 /* TreeSelectDate Interface */

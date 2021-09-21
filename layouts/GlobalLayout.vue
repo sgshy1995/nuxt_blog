@@ -5,14 +5,14 @@
       <a-layout>
         <a-layout-header>
           <a-row :gutter="32">
-            <a-col :md="24" :lg="18">
+            <a-col :md="24" :xl="14" :xxl="18">
               <div class="article-search">
                 <a-input size="large" placeholder="请输入文章标题搜索">
                   <a-icon slot="suffix" type="search" style="color: #1081e8" />
                 </a-input>
               </div>
             </a-col>
-            <a-col :md="24" :lg="6" :gutter="32" class="user-board" type="flex" justify="space-between" align="center" >
+            <a-col :md="24" :xl="10" :xxl="18" :gutter="32" class="user-board" type="flex" justify="space-between" align="center" >
               <a-row class="info-out">
                 <a-col span="7" class="user-message">
                   <a-badge count="44" :numberStyle="{background: '#f82485', borderRadius: '50%', width: '24px', height: '24px', padding: '0', textAlign: 'center', lineHeight: '24px', fontSize: '12px'}">
@@ -30,17 +30,10 @@
                   <a-divider type="vertical" />
                 </a-col>
                 <a-col span="15" class="user-info">
-                  <a-tooltip v-if="userInfo">
-                    <div slot="title">
-                      <div style="margin-bottom: 24px">您的浏览器是 <div class="info-tips">{{ (info.browser && info.browser.name) || '未知' }}</div>版本为 <div class="info-tips">{{ (info.browser && info.browser.version) || '未知' }}</div></div>
-                      <div style="margin-bottom: 24px">您的操作系统是 <div class="info-tips">{{ (info.os && info.os.name) || '未知' }}</div>版本为 <div class="info-tips">{{ (info.os && info.os.version) || '未知' }}</div></div>
-                      <div>您的设备型号是 <div class="info-tips">{{ (info.device && info.device.type) || '未知' }}</div></div>
-                    </div>
-                    <div class="ready-login">
-                      <span class="user-name">欢迎您， <span>{{ userInfo.nickname }}</span></span>
-                      <a-avatar class="user-avatar" :src="avatar" :size="38" />
-                    </div>
-                  </a-tooltip>
+                  <div v-if="userInfo" class="ready-login">
+                    <span class="user-name">欢迎您， <span>{{ userInfo.nickname }}</span></span>
+                    <a-avatar class="user-avatar" :src="avatar" :size="38" />
+                  </div>
                   <div class="not-login" v-else>
                     <nuxt-link to="/login">
                       <a-button ghost size="small" type="link">

@@ -95,3 +95,8 @@ sw.*
 
 # .local
 *.local
+
+# ssl key
+*.key
+*.crt
+*.cert
