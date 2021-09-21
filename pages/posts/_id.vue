@@ -69,7 +69,6 @@ export default class PostDetail extends Vue{
     border-radius: 10px;
     box-sizing: border-box;
     height: calc(100vh - 132px);
-    overflow: auto;
     @media (max-width: 1199px) {
       height: calc(100vh - 202px);
     }
@@ -80,7 +79,8 @@ export default class PostDetail extends Vue{
     }
     .content{
       width: 100%;
-      height: 100%;
+      height: calc(100% - 30px);
+      overflow-y: auto;
     }
   }
 }
