@@ -6,6 +6,9 @@
         <span slot="no" slot-scope="text,record,index">
           {{ index+1 }}
         </span>
+        <span slot="title1" slot-scope="text,record,index">
+          <nuxt-link :to="`/posts/${record.id}`">{{record.title}}</nuxt-link>
+        </span>
         <span slot="createdAt" slot-scope="text,record,index">
           {{ moment(text,'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD hh:mm:ss') }}
         </span>
@@ -30,7 +33,7 @@ import {Post} from '~/src/entity/Post';
 
     let postsInList:Post[] = []
 
-    await $axios.get('/api/posts').then(response=>{
+    await $axios.get('/api/all_posts').then(response=>{
       postsInList = response.data.data
     })
 
@@ -56,10 +59,10 @@ export default class App extends Vue {
     },
     {
       title: '文章标题',
-      dataIndex: 'title',
-      key: 'title',
+      dataIndex: 'title1',
+      key: 'title1',
       width: 200,
-      scopedSlots: { customRender: 'title' },
+      scopedSlots: { customRender: 'title1' },
     },
     {
       title: '发表日期',
@@ -104,6 +107,12 @@ export default class App extends Vue {
     },
   ]
   data: any[] = []
+
+  mounted(){
+    this.$axios.get('/api/all_posts').then(response=>{
+      console.log('response',response)
+    })
+  }
 }
 </script>
 

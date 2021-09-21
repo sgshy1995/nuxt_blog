@@ -78,6 +78,17 @@ const posts = (router: Router) => {
     };
   })
 
+  router.get("/all_posts", async (ctx) => {
+    const connection = await getDBConnection();
+    const postsList = await connection.manager.find(Post)
+    ctx.status = 200;
+    ctx.body = {
+      code: 200,
+      data: postsList || [],
+      status: true
+    };
+  })
+
   router.get("/posts/:id", async (ctx) => {
     const connection = await getDBConnection();
     const postInfo = await connection.manager.findOne(Post,{
