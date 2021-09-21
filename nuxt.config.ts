@@ -48,6 +48,7 @@ module.exports = {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
+    baseURL: process.env.NODE_ENV === "production" ? 'https://0.0.0.0:8000' : 'https://localhost:8000',
     withCredentials: true
   },
 
