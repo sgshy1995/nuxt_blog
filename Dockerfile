@@ -27,3 +27,6 @@ COPY . .
 EXPOSE 8000
 
 CMD [ "yarn", "product" ]
+
+CMD [ "cd", "/usr/src/app/static" ]
+CMD [ "mkdir", "uploads" ]
