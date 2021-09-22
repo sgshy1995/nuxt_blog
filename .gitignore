@@ -100,3 +100,6 @@ sw.*
 *.key
 *.crt
 *.cert
+
+# upload
+static/uploads/

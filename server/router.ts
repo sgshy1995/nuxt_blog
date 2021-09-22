@@ -6,6 +6,7 @@ import infoIn from '@/server//api/info';
 import register from '@/server//api/register';
 import login from '@/server/api/login';
 import posts from '@/server/api/posts'
+import upload from '@/server/api/upload'
 
 // 设置cookie加密秘钥
 
@@ -43,6 +44,9 @@ infoIn(router);
 
 // 博客
 posts(router);
+
+// 上传
+upload(router);
 
 export default router;
 

@@ -16,8 +16,10 @@
             </nuxt-link>
           </a-menu-item>
 
-          <a-menu-item key="userinfo">
+          <a-menu-item key="Center">
+            <nuxt-link to="/center">
               <a-icon type="user" /><span>个人信息</span>
+            </nuxt-link>
           </a-menu-item>
 
         </a-menu>
@@ -53,7 +55,7 @@
                   <div v-if="userInfo && userInfo.id" class="ready-login">
                     <span class="user-name">欢迎您， <span>{{ userInfo.nickname }}</span></span>
                     <a-dropdown>
-                      <a-avatar class="user-avatar" :src="avatar" :size="38" />
+                      <a-avatar class="user-avatar" :src="userInfo.avatar || avatar" :size="38" />
                       <a-menu slot="overlay">
                         <a-menu-item @click="$notification.success({message: '退出登录', description: `请您重新登录`, duration: 4})">
                           <nuxt-link to="/login">退出登录</nuxt-link>
@@ -96,9 +98,12 @@ import {Vue, Component, Watch} from 'vue-property-decorator';
 export default class GlobalLayout extends Vue {
   avatar:string = require('@/assets/avatar.jpeg')
   info: Info = this.$store.state.useragent.info
-  userInfo:ShowUser = this.$store.state.user.userInfo || null
 
   selectedKeys: string[] = []
+
+  get userInfo(){
+    return this.$store.state.user.userInfo || null
+  }
 
   @Watch('$route',{deep:true,immediate:true})
   onRouteChange(){

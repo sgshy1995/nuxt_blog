@@ -1,27 +1,46 @@
 import router from '~/server/router';
 
-import path from 'path'
+import path from 'path';
 
 import Koa from 'koa';
 import consola from 'consola';
 import {Nuxt, Builder} from 'nuxt';
 import json from 'koa-json';
 import bodyParser from 'koa-bodyparser';
-import dotenv from 'dotenv'
-dotenv.config()
+import dotenv from 'dotenv';
+import parse from 'co-busboy';
+
+dotenv.config();
 
 import session from 'koa-session';
 //import cors from '@koa/cors'
 
-import https from 'https'
+import https from 'https';
 
 const app = new Koa();
 
 app.use(json());
 
-app.use(bodyParser({
-  enableTypes: ['json', 'form', 'text']
+import koaBody from 'koa-body';
+
+const uploadPath = process.env.UPLOAD_PATH;
+
+app.use(koaBody({
+  multipart: true, // 支持文件上传
+  formidable: {
+    uploadDir: uploadPath, // 设置文件上传目录
+    keepExtensions: true,    // 保持文件的后缀
+    maxFieldsSize: 3 * 1024 * 1024, // 文件上传大小
+    onFileBegin: (name, file) => { // 文件上传前的设置
+      // console.log(`name: ${name}`);
+      // console.log(file);
+    },
+  }
 }));
+
+/*app.use(bodyParser({
+  enableTypes: ['json', 'form', 'text']
+}));*/
 
 /*import koaBody from 'koa-body'
 
@@ -48,17 +67,24 @@ const CONFIG = {
   /** (number || 'session') maxAge in ms (default is 1 days) */
   /** 'session' will result in a cookie that expires when session/browser is closed */
   /** Warning: If a session cookie is stolen, this cookie will never expire */
-  maxAge: 'session', /**  session 过期时间，以毫秒ms为单位计算 。*/
-  autoCommit: true, /** 自动提交到响应头。(默认是 true) */
-  overwrite: true, /** 是否允许重写 。(默认是 true) */
-  httpOnly: true, /** 是否设置HttpOnly，如果在Cookie中设置了"HttpOnly"属性，那么通过程序(JS脚本、Applet等)将无法读取到Cookie信息，这样能有效的防止XSS攻击。  (默认 true) */
-  signed: true, /** 是否签名。(默认是 true) */
-  rolling: true, /** 是否每次响应时刷新Session的有效期。(默认是 false) */
-  renew: false, /** 是否在Session快过期时刷新Session的有效期。(默认是 false) */
+  maxAge: 'session',
+  /**  session 过期时间，以毫秒ms为单位计算 。*/
+  autoCommit: true,
+  /** 自动提交到响应头。(默认是 true) */
+  overwrite: true,
+  /** 是否允许重写 。(默认是 true) */
+  httpOnly: true,
+  /** 是否设置HttpOnly，如果在Cookie中设置了"HttpOnly"属性，那么通过程序(JS脚本、Applet等)将无法读取到Cookie信息，这样能有效的防止XSS攻击。  (默认 true) */
+  signed: true,
+  /** 是否签名。(默认是 true) */
+  rolling: true,
+  /** 是否每次响应时刷新Session的有效期。(默认是 false) */
+  renew: false,
+  /** 是否在Session快过期时刷新Session的有效期。(默认是 false) */
   secure: true,
 };
 
-app.use(session({...CONFIG,sameSite: "none",maxAge: 'session'}, app));
+app.use(session({...CONFIG, sameSite: "none", maxAge: 'session'}, app));
 
 // 注册路由
 app.use(router.routes());
@@ -92,29 +118,30 @@ async function start() {
 
   // 监听所有路由
 
-  app.use(async (ctx,next) => {
+  app.use(async (ctx, next) => {
+
 
     // 获取 Origin 请求头
     const requestOrigin = ctx.get('Origin');
-    const method = ctx.request.method
-    console.log('method',method)
+    const method = ctx.request.method;
+    console.log('method', method);
 
     // 不管有没有跨域都要设置 Vary: Origin
-    ctx.set('Vary', 'Origin')
+    ctx.set('Vary', 'Origin');
 
-    if (method==='OPTIONS'){
-      ctx.response.status = 200
-      ctx.res.statusCode = 200
-      ctx.body = 200
-      await next()
-    }else{
+    if (method === 'OPTIONS') {
+      ctx.response.status = 200;
+      ctx.res.statusCode = 200;
+      ctx.body = 200;
+      await next();
+    } else {
       if (requestOrigin) {
         // 设置响应头
-        ctx.set('Access-Control-Allow-Origin',requestOrigin)
-        ctx.set('Access-Control-Allow-Credentials','true')
-        ctx.set('Access-Control-Allow-Methods','OPTIONS, GET, PUT, POST, DELETE')
-        ctx.set('Access-Control-Allow-Headers','Content-Type, Access-Control-Allow-Headers, Access-Control-Request-Headers, Access-Control-Request-Method, Authorization, X-Requested-With, User-Agent, Referer, Origin')
-        ctx.set('Access-Control-Max-Age','1728000')
+        ctx.set('Access-Control-Allow-Origin', requestOrigin);
+        ctx.set('Access-Control-Allow-Credentials', 'true');
+        ctx.set('Access-Control-Allow-Methods', 'OPTIONS, GET, PUT, POST, DELETE');
+        ctx.set('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Access-Control-Request-Headers, Access-Control-Request-Method, Authorization, X-Requested-With, User-Agent, Referer, Origin');
+        ctx.set('Access-Control-Max-Age', '1728000');
         //ctx.set('Access-Control-Expose-Headers','Content-Type,Content-Length,Accept,Accept-Encoding,Accept-Language,Referer,Connection,X-Access-Token,Authorization,Origin,Cache-Control,X-Requested-With,X-Check-Result,Content-Disposition,Host')
       }
       ctx.status = 200;
@@ -123,8 +150,8 @@ async function start() {
     }
 
     // 登录注册清空session
-    if (ctx.path.indexOf('/login')>-1 || ctx.path.indexOf('/register')>-1){
-      ctx.session = null
+    if (ctx.path.indexOf('/login') > -1 || ctx.path.indexOf('/register') > -1) {
+      ctx.session = null;
     }
 
   });
@@ -138,7 +165,7 @@ async function start() {
   consola.ready({
     message: `☆☆☆☆☆ Server listening on https://${host}:${port} ☆☆☆☆☆${process.env.NEXT_PUBLIC_FRONT_KEY}`,
     badge: true
-  })
+  });
 }
 
 start().then();
