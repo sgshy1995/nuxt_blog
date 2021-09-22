@@ -1,14 +1,11 @@
 import router from '~/server/router';
 
-import path from 'path';
-
 import Koa from 'koa';
 import consola from 'consola';
 import {Nuxt, Builder} from 'nuxt';
 import json from 'koa-json';
-import bodyParser from 'koa-bodyparser';
+//import bodyParser from 'koa-bodyparser';
 import dotenv from 'dotenv';
-import parse from 'co-busboy';
 
 dotenv.config();
 
