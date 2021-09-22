@@ -37,11 +37,11 @@
             <a-col :md="24" :xl="10" :xxl="6" :gutter="32" class="user-board" type="flex" justify="space-between" align="center" >
               <a-row class="info-out">
                 <a-col span="7" class="user-message">
-                  <a-badge count="44" :numberStyle="{background: '#f82485', borderRadius: '50%', width: '24px', height: '24px', padding: '0', textAlign: 'center', lineHeight: '24px', fontSize: '12px'}">
+<!--                  <a-badge count="44" :numberStyle="{background: '#f82485', borderRadius: '50%', width: '24px', height: '24px', padding: '0', textAlign: 'center', lineHeight: '24px', fontSize: '12px'}">
                     <span class="tips">
                       <a-icon theme="filled" type="bulb" style="font-size: 18px;color: #1081e8" />
                     </span>
-                  </a-badge>
+                  </a-badge>-->
                   <a-badge count="9987" :numberStyle="{background: '#1081e8', borderRadius: '50%', width: '24px', height: '24px', padding: '0', textAlign: 'center', lineHeight: '24px', fontSize: '12px'}">
                     <span class="message">
                       <a-icon theme="filled" type="message" style="font-size: 18px;color: #1081e8" />
@@ -163,7 +163,8 @@ export default class GlobalLayout extends Vue {
 
       .user-message{
         display: flex;
-        justify-content: space-between;
+        //justify-content: space-between;
+        justify-content: center;
         align-items: center;
         > span{
           width: 38px;

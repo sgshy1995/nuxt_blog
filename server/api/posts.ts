@@ -1,6 +1,7 @@
 import Router from 'koa-router';
 import {getDBConnection} from '@/lib/getDBConnection';
 import {Post} from '@/src/entity/Post';
+import {User} from '@/src/entity/User';
 
 const posts = (router: Router) => {
   router.post("/posts", async (ctx) => {
@@ -80,7 +81,24 @@ const posts = (router: Router) => {
 
   router.get("/all_posts", async (ctx) => {
     const connection = await getDBConnection();
-    const postsList = await connection.manager.find(Post)
+    const userList = await connection.manager.find(User)
+    let postsList= []
+    await Promise.all(userList.map(async (item)=>{
+      const postsListIn = await connection.manager.find(Post,{
+        author: item
+      })
+      postsListIn.map(post=>{
+        Object.defineProperty(post,'author',{
+          value: item.nickname,
+          configurable: true,
+          enumerable: true,
+          writable: true
+        })
+      })
+      //console.log('postsListIn',postsListIn)
+      postsList = [...postsList,...postsListIn]
+    }))
+    //const postsList = await connection.manager.find(Post)
     ctx.status = 200;
     ctx.body = {
       code: 200,

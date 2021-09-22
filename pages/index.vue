@@ -2,7 +2,20 @@
   <div class="index">
     <section class="recent">
       <div class="recent-title">社区博客</div>
-      <a-table rowKey="id" :columns="columns" :pagination="false" :data-source="postsInList" :locale="{emptyText: '暂无文章'}" :borderd="false">
+      <a-row class="blog-list" :gutter="24">
+        <a-col :xs="24" :sm="12" :xl="6" :xxl="4" v-for="(u,index) in postsInList" :key="index">
+          <div class="blog-item">
+            <div style="white-space: nowrap">
+              <div class="num">{{ index+1 }}</div>
+              <div class="title"><nuxt-link :to="`/posts/${u.id}`">{{u.title}}</nuxt-link></div>
+            </div>
+
+            <div class="time">发表时间：{{ moment(u.createdAt,'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD hh:mm:ss') }}</div>
+            <div class="author">作者：{{ u.author }}</div>
+          </div>
+        </a-col>
+      </a-row>
+<!--      <a-table rowKey="id" :columns="columns" :pagination="false" :data-source="postsInList" :locale="{emptyText: '暂无文章'}" :borderd="false">
         <span slot="no" slot-scope="text,record,index">
           {{ index+1 }}
         </span>
@@ -12,7 +25,7 @@
         <span slot="createdAt" slot-scope="text,record,index">
           {{ moment(text,'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD hh:mm:ss') }}
         </span>
-      </a-table>
+      </a-table>-->
     </section>
   </div>
 </template>
@@ -139,6 +152,34 @@ export default class App extends Vue {
       font-size: 16px;
       color: #233167;
       padding-bottom: 24px;
+    }
+    .blog-item{
+      border: 2px solid #aca9a9;
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 24px;
+      .num{
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+        text-align: center;
+        border-radius: 50%;
+        color: #fff;
+        margin-bottom: 10px;
+        background: #1081e8;
+      }
+      .title{
+        display: inline-block;
+        margin-left: 12px;
+      }
+      .time,.author{
+        font-size: 12px;
+        white-space: nowrap;
+        width: 100%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
     }
     /deep/.ant-table{
       .ant-table-thead tr th{
