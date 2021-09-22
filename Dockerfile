@@ -24,9 +24,9 @@ COPY . .
 # build
 # RUN yarn build
 
+RUN cd /usr/src/app/static
+RUN mkdir uploads
+
 EXPOSE 8000
 
 CMD [ "yarn", "product" ]
-
-CMD [ "cd", "/usr/src/app/static" ]
-CMD [ "mkdir", "uploads" ]
