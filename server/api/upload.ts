@@ -29,7 +29,7 @@ const upload = (router: Router) => {
         code: 200,
         message: '上传成功',
         data: {
-          filePath: (<any>file).path.split('/static/')[1]
+          filePath: '/' + (<any>file).path.split('/static/')[1]
         }
       }
     }else{

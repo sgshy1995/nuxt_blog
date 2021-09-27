@@ -7,6 +7,8 @@ import register from '@/server//api/register';
 import login from '@/server/api/login';
 import posts from '@/server/api/posts'
 import upload from '@/server/api/upload'
+import logout from '@/server/api/logout'
+import discuss from '@/server/api/discuss'
 
 // 设置cookie加密秘钥
 
@@ -47,6 +49,12 @@ posts(router);
 
 // 上传
 upload(router);
+
+// 退出登录
+logout(router);
+
+// 评论
+discuss(router);
 
 export default router;
 

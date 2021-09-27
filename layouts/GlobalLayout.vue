@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <a-layout>
+    <a-layout v-show="readyLoad">
       <a-layout-sider>
         <a-menu :selectedKeys="selectedKeys">
 
@@ -42,7 +42,7 @@
                       <a-icon theme="filled" type="bulb" style="font-size: 18px;color: #1081e8" />
                     </span>
                   </a-badge>-->
-                  <a-badge count="9987" :numberStyle="{background: '#1081e8', borderRadius: '50%', width: '24px', height: '24px', padding: '0', textAlign: 'center', lineHeight: '24px', fontSize: '12px'}">
+                  <a-badge count="0" :numberStyle="{background: '#1081e8', borderRadius: '50%', width: '24px', height: '24px', padding: '0', textAlign: 'center', lineHeight: '24px', fontSize: '12px'}">
                     <span class="message">
                       <a-icon theme="filled" type="message" style="font-size: 18px;color: #1081e8" />
                     </span>
@@ -57,8 +57,8 @@
                     <a-dropdown>
                       <a-avatar class="user-avatar" :src="userInfo.avatar || avatar" :size="38" />
                       <a-menu slot="overlay">
-                        <a-menu-item @click="$notification.success({message: '退出登录', description: `请您重新登录`, duration: 4})">
-                          <nuxt-link to="/login">退出登录</nuxt-link>
+                        <a-menu-item @click="handleLogout">
+                          <span>退出登录</span>
                         </a-menu-item>
                       </a-menu>
                     </a-dropdown>
@@ -98,11 +98,16 @@ import {Vue, Component, Watch} from 'vue-property-decorator';
 export default class GlobalLayout extends Vue {
   avatar:string = require('@/assets/avatar.jpeg')
   info: Info = this.$store.state.useragent.info
-
+  baseUrl: string = process.env.BASE_URL;
   selectedKeys: string[] = []
+  readyLoad: boolean = false
 
   get userInfo(){
     return this.$store.state.user.userInfo || null
+  }
+
+  mounted(){
+    this.readyLoad = true
   }
 
   @Watch('$route',{deep:true,immediate:true})
@@ -110,6 +115,16 @@ export default class GlobalLayout extends Vue {
     console.log('$route',this.$route)
     const key = this.$route.name
     this.selectedKeys = [key]
+  }
+
+  handleLogout(){
+    this.$axios.post('/api/logout',{}).then(response=>{
+      this.$notification.success({message: '退出登录', description: `请您重新登录`, duration: 4})
+      this.$router.push({path:'/login'})
+    }).catch(error=>{
+      this.$notification.error({message: '退出登录失败', description: `请联系管理员`, duration: 4})
+      console.log('error',error)
+    })
   }
 }
 </script>
@@ -123,6 +138,12 @@ export default class GlobalLayout extends Vue {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
+
+  /deep/ .ant-layout.ant-layout-has-sider{
+    border: 2px solid #1081e8;
+    flex-direction: row;
+    display: flex;
+  }
 
   .ant-layout{
     height: 100%;
@@ -208,6 +229,9 @@ export default class GlobalLayout extends Vue {
             flex-shrink: 0;
             cursor: pointer;
           }
+        }
+        .not-login{
+          margin-bottom: 32px;
         }
       }
     }

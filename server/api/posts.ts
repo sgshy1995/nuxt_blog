@@ -115,7 +115,10 @@ const posts = (router: Router) => {
     ctx.status = 200;
     ctx.body = {
       code: 200,
-      data: postInfo,
+      data: {
+        ...postInfo,
+        author: ctx.session.user.nickname
+      },
       status: true
     };
   })

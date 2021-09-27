@@ -25,7 +25,7 @@
                     </div>
                   </div>
                 </a-upload>
-                <span style="color: #c8c9cd">（点击更换头像）</span>
+                <span style="color: #c8c9cd;white-space: nowrap">（点击更换头像）</span>
               </a-form-model-item>
               <a-form-model-item label="昵称" prop="nickname">
                 <a-input v-model="form.nickname" placeholder="请输入昵称"/>
@@ -185,7 +185,9 @@ export default class Center extends Vue{
           }
         }
       }
-
+      .button-wrapper{
+        white-space: nowrap;
+      }
     }
   }
 }

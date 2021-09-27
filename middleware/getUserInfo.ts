@@ -9,6 +9,12 @@ const getUserInfo:Middleware = async ({route, store, redirect,req,app })=>{
     if (userInfo){
       store.commit("user/commitUserInfo", userInfo)
     }else{
+      store.commit("user/commitUserInfo", {
+        id: 0,
+        username: '',
+        avatar: '',
+        nickname: ''
+      })
       if (route.path.indexOf('/posts')>-1 || route.path.indexOf('/center')>-1){
         console.log('重新跳转')
         await redirect({path: '/login'})
