@@ -22,7 +22,8 @@ module.exports = {
     'ant-design-vue/dist/antd.css',
     'quill/dist/quill.snow.css',
     'quill/dist/quill.bubble.css',
-    'quill/dist/quill.core.css'
+    'quill/dist/quill.core.css',
+    'github-markdown-css/github-markdown.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
