@@ -20,7 +20,7 @@
             <div class="comments-item" v-for="(u,index) in discussionList" :key="index">
               <a-avatar :src="u.user.avatar || avatar" :size="28"></a-avatar>
               <span class="item-name">{{ u.user.nickname }}</span>
-              <span class="item-time">于 <span style="padding: 0">{{ moment(u.createdAt,'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD hh:mm:ss') }}</span> 评论了：</span>
+              <span class="item-time"><span class="item-time-text">于 </span><span style="padding: 0">{{ moment(u.createdAt,'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD hh:mm:ss') }}</span><span class="item-time-text"> 评论了： </span></span>
               <div class="item-content">{{ u.content }}</div>
             </div>
           </div>
@@ -36,8 +36,8 @@
               </a-form-model-item>
               <a-form-model-item style="margin-bottom: 0">
                 <div class="button-wrapper">
-                  <a-button type="primary" @click="onSubmit" :loading="loading">
-                    保存
+                  <a-button @click="onSubmit" size="small" :loading="loading" style="border-color: #1081e8; color: #1081e8">
+                    发表评论
                   </a-button>
                 </div>
               </a-form-model-item>
@@ -134,8 +134,6 @@ export default class PostDetail extends Vue{
           this.$router.go(0)
         }).catch(error=>{
           this.$message.error(error.response.data.message || '保存失败')
-        }).finally(()=>{
-          this.loading = false
         })
       }
     })
@@ -167,18 +165,29 @@ export default class PostDetail extends Vue{
         span{
           padding-right: 2em;
         }
+        @media screen and (max-width: 1199px){
+          span{
+            display: block;
+          }
+        }
       }
     }
     .content{
       width: 100%;
       height: calc(100% - 74px);
       overflow-y: auto;
+      @media screen and (max-width: 1199px){
+        &{
+          height: calc(100% - 104px);
+        }
+      }
       .content-comments{
         margin-top: 48px;
         width: 100%;
         border-radius: 10px;
         border: 2px solid rgba(35, 49, 103, 0.29);
         padding: 24px;
+        overflow-y: auto;
         .content-comments-title{
           padding-bottom: 12px;
           color: #28bfbf;
@@ -189,7 +198,7 @@ export default class PostDetail extends Vue{
           font-size: 14px;
         }
         .content-comments-content{
-          padding-bottom: 24px;
+          margin-bottom: 24px;
           .comments-item{
             padding: 12px 0 12px 0;
             &:not(:last-child){
@@ -203,6 +212,16 @@ export default class PostDetail extends Vue{
               color: #9a9898;
               padding-left: 12px;
             }
+            @media screen and (max-width: 700px){
+              .item-time{
+                display: block;
+                padding-left: 0;
+                padding-top: 12px;
+                .item-time-text{
+                  display: none;
+                }
+              }
+            }
             .item-content{
               color: #4e5969;
               font-size: 14px;
@@ -211,7 +230,19 @@ export default class PostDetail extends Vue{
           }
         }
         .content-comments-form{
-
+          .ant-form-item{
+            margin-bottom: 12px;
+          }
+          .ant-input:hover{
+            border-color: #1081e8;
+          }
+          .has-error .ant-input, .has-error .ant-input:hover{
+            border-color: #f5222d;
+          }
+          .button-wrapper{
+            line-height: 24px;
+            height: 24px;
+          }
         }
       }
     }
