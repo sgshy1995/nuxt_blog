@@ -2109,10 +2109,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*":
-  version "8.10.66"
-  resolved "https://registry.nlark.com/@types/node/download/@types/node-8.10.66.tgz?cache=0&sync_timestamp=1630451109836&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-8.10.66.tgz"
-  integrity sha1-3QNdQJ3zIqzIPf9ipgLxKleDu7M=
+"@types/node@*", "@types/node@^16.10.9":
+  version "16.10.9"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.10.9.tgz#8f1cdd517972f76a3b928298f4c0747cd6fef25a"
+  integrity sha512-H9ReOt+yqIJPCutkTYjFjlyK6WEMQYT9hLZMlWtOjFQY2ItppsWZ6RJf8Aw+jz5qTYceuHvFgPIaKOHtLAEWBw==
 
 "@types/node@12.20.12":
   version "12.20.12"
@@ -2123,11 +2123,6 @@
   version "11.15.54"
   resolved "https://registry.nlark.com/@types/node/download/@types/node-11.15.54.tgz?cache=0&sync_timestamp=1630451109836&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-11.15.54.tgz#59ed60e7b0d56905a654292e8d73275034eb6283"
   integrity sha1-We1g57DVaQWmVCkujXMnUDTrYoM=
-
-"@types/node@^16.7.10":
-  version "16.7.10"
-  resolved "https://registry.nlark.com/@types/node/download/@types/node-16.7.10.tgz?cache=0&sync_timestamp=1630451109836&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.7.10.tgz#7aa732cc47341c12a16b7d562f519c2383b6d4fc"
-  integrity sha1-eqcyzEc0HBKha31WL1GcI4O21Pw=
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.1"
