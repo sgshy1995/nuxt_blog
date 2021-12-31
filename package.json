@@ -22,7 +22,7 @@
     "entity:create": "typeorm entity:create -n Post"
   },
   "dependencies": {
-    "@babel/cli": "^7.15.4",
+    "@babel/cli": "^7.16.7",
     "@babel/core": "^7.15.5",
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/dotenv": "^1.4.1",
