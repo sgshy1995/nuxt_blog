@@ -59,7 +59,7 @@
     "concurrently": "^6.2.1",
     "cross-env": "^7.0.3",
     "github-markdown-css": "^4.0.0",
-    "jest": "^27.0.5",
+    "jest": "^27.5.1",
     "koa": "^2.7.0",
     "koa-body": "^4.2.0",
     "koa-bodyparser": "^4.3.0",
