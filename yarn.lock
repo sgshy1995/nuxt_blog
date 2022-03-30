@@ -2075,10 +2075,10 @@
   resolved "https://registry.nlark.com/@types/less/download/@types/less-3.0.2.tgz?cache=0&sync_timestamp=1629708352789&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fless%2Fdownload%2F%40types%2Fless-3.0.2.tgz"
   integrity sha1-J2HUd2eMg3TLmJdmaHFmLrHREV4=
 
-"@types/lodash@^4.14.172":
-  version "4.14.172"
-  resolved "https://registry.nlark.com/@types/lodash/download/@types/lodash-4.14.172.tgz?cache=0&sync_timestamp=1629708369273&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Flodash%2Fdownload%2F%40types%2Flodash-4.14.172.tgz#aad774c28e7bfd7a67de25408e03ee5a8c3d028a"
-  integrity sha1-qtd0wo57/Xpn3iVAjgPuWow9Aoo=
+"@types/lodash@^4.14.181":
+  version "4.14.181"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.181.tgz#d1d3740c379fda17ab175165ba04e2d03389385d"
+  integrity sha512-n3tyKthHJbkiWhDZs3DkhkCzt2MexYHXlX0td5iMplyfwketaOeKboEVBqzceH7juqvEg3q5oUoBFxSLu7zFag==
 
 "@types/marked@^3.0.1":
   version "3.0.1"
