@@ -47,7 +47,7 @@
     "@types/koa-generic-session": "^1.0.6",
     "@types/koa-router": "^7.4.4",
     "@types/koa-session": "^5.10.4",
-    "@types/lodash": "^4.14.172",
+    "@types/lodash": "^4.14.186",
     "@types/marked": "^3.0.1",
     "@types/node": "^16.7.10",
     "@types/ua-parser-js": "^0.7.36",
